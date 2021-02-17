@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/", name="home")
      */
     public function index(): Response
     {
