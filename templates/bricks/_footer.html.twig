@@ -1,0 +1,31 @@
+<footer class="container-fluid mt-4 py-4 bg-dark text-white">
+	<div class="row justify-content-around">
+		<div class="col-xs-12 col-md-6 text-center">
+			<h5>Categories</h5>
+			<ul class="list-unstyled text-small">
+				{% for category in categories %}
+					<li>
+						<a class="text-muted" href="{{ path('category_index', { 'id' : category.id }) }}">{{ category.name }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="col-xs-12 col-md-6 text-center">
+			<h5>Autres</h5>
+			<ul class="list-unstyled text-small">
+				<li>
+					<a class="text-muted" href="#">Resource</a>
+				</li>
+				<li>
+					<a class="text-muted" href="#">Resource name</a>
+				</li>
+				<li>
+					<a class="text-muted" href="#">Another resource</a>
+				</li>
+				<li>
+					<a class="text-muted" href="#">Final resource</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</footer>

@@ -23,4 +23,11 @@ class HomeController extends AbstractController
             'categories' => $categoryRepository->findAll(),
         ]);
     }
+
+    public function renderFooter(CategoryRepository $categoryRepository): Response
+    {
+        return $this->render('bricks/_footer.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+        ]);
+    }
 }
