@@ -10,10 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/video')]
+/**
+ * @Route("/video", name="video_")
+ */
 class VideoController extends AbstractController
 {
-    #[Route('/', name: 'video_index', methods: ['GET'])]
+    /**
+     * @Route("/", name="index", methods={"GET"})
+     */
     public function index(VideoRepository $videoRepository): Response
     {
         return $this->render('video/index.html.twig', [
@@ -21,7 +25,9 @@ class VideoController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'video_new', methods: ['GET', 'POST'])]
+    /**
+     * @Route("/new", name="new", methods={"GET", "POST"})
+     */
     public function new(Request $request): Response
     {
         $video = new Video();
@@ -42,7 +48,9 @@ class VideoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'video_show', methods: ['GET'])]
+    /**
+     * @Route("/{id}", name="show", methods={"GET"})
+     */
     public function show(Video $video): Response
     {
         return $this->render('video/show.html.twig', [
@@ -50,7 +58,9 @@ class VideoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'video_edit', methods: ['GET', 'POST'])]
+    /**
+     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
+     */
     public function edit(Request $request, Video $video): Response
     {
         $form = $this->createForm(VideoType::class, $video);
@@ -68,10 +78,12 @@ class VideoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'video_delete', methods: ['DELETE'])]
+    /**
+     * @Route("/{id}", name="delete", methods={"DELETE"})
+     */
     public function delete(Request $request, Video $video): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$video->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $video->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($video);
             $entityManager->flush();
