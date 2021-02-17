@@ -15,12 +15,14 @@
 		<div class="row p2">
 			<h2>Catégorie</h2>
 			{% for category in categories %}
-				<div class="card col-lg-4 cold-md-6 col-sm-12 bg-dark text-white">
+				<div class="card col-lg-4 cold-md-6 col-sm-12 bg-dark text-white p-2">
 					<img src="{{ category.picture }}" class="card-img" alt="{{ category.name }}">
-					<div class="card-img-overlay">
-						<h3 class="card-title">{{ category.name|upper }}</h5>
-						<a href="{{ path('category_edit', {'id': category.id}) }}" class="card-link btn btn-success">Modifier</a>
-						<a href="#" class="card-link btn btn-danger">Supprimer</a>
+					<div class="card-img-overlay d-flex flex-column justify-content-evenly">
+						<h3 class="card-title d-flex justify-content-center">{{ category.name|upper }}</h5>
+						<div class="d-flex justify-content-evenly">
+							<a href="{{ path('category_edit', {'id': category.id}) }}" class="card-link btn btn-success" type="button">Modifier</a>
+							{{ include('category/_delete_form.html.twig') }}
+						</div>
 					</div>
 				</div>
 			{% else %}
