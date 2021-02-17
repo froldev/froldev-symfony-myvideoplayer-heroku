@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}myVideoPlayer || Ajouter une catégorie
+{% endblock %}
+
+{% block body %}
+	<div class="row p2 mx-auto">
+		<h1>Nouvelle Catégorie</h1>
+	</div>
+	<div class="row p2 mx-auto">
+		{{ include('category/_form.html.twig') }}
+	</div>
+	<div class="row p2">
+		<a class="btn btn-dark col-2" href="{{ path('category_index') }}">Retour</a>
+	</div>
+{% endblock %}
