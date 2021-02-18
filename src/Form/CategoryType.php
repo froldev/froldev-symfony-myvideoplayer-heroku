@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class CategoryType extends AbstractType
 {
@@ -17,7 +18,7 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom : '])
-            ->add('picture', UrlType::class, ['label' => 'Image : '])
+            ->add('imageFile', VichFileType::class, ['label' => 'Image : (dimensions préconisées : 800 x 400) '])
             ->add('description', CKEditorType::class, ['label' => 'Description : ', 'config' => ['toolbar' => 'standard']])
             ->add('position', IntegerType::class, ['label' => 'Position : ']);
     }

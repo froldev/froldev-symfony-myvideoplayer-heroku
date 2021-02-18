@@ -3,16 +3,20 @@
 namespace App\Entity;
 
 use App\Entity\Video;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CategoryRepository;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @Vich\Uploadable
  * @UniqueEntity(
  *     fields={"name"},
  *     errorPath="name",
@@ -35,10 +39,15 @@ class Category
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Veuillez indiquer une url d'image")
+     * @Vich\UploadableField(mapping="category_image", fileNameProperty="imageName")
+     * @var File|null
      */
-    private $picture;
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $imageName;
 
     /**
      * @ORM\Column(type="text")
@@ -63,9 +72,16 @@ class Category
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
+
     public function __construct()
     {
         $this->videos = new ArrayCollection();
+        $this->updatedAt = new \DateTime('now');
     }
 
     public function getId(): ?int
@@ -85,16 +101,31 @@ class Category
         return $this;
     }
 
-    public function getPicture(): ?string
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
     {
-        return $this->picture;
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 
-    public function setPicture(string $picture): self
+    public function getImageFile(): ?File
     {
-        $this->picture = $picture;
+        return $this->imageFile;
+    }
 
-        return $this;
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
     }
 
     public function getDescription(): ?string
@@ -159,6 +190,18 @@ class Category
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
