@@ -1,41 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Video index{% endblock %}
+{% block title %}Video index
+{% endblock %}
 
 {% block body %}
-    <h1>Video index</h1>
+	<h1>Video index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Url</th>
-                <th>Description</th>
-                <th>Link</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for video in videos %}
-            <tr>
-                <td>{{ video.id }}</td>
-                <td>{{ video.name }}</td>
-                <td>{{ video.url }}</td>
-                <td>{{ video.description }}</td>
-                <td>{{ video.link }}</td>
-                <td>
-                    <a href="{{ path('video_show', {'id': video.id}) }}">show</a>
-                    <a href="{{ path('video_edit', {'id': video.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Url</th>
+				<th>Description</th>
+				<th>Link</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for video in videos %}
+				<tr>
+					<td>{{ video.id }}</td>
+					<td>{{ video.name }}</td>
+					<td>{{ video.url }}</td>
+					<td>{{ video.description }}</td>
+					<td>{{ video.link }}</td>
+					<td>
+						<a href="{{ path('video_show', {'slug': video.slug}) }}">show</a>
+						<a href="{{ path('video_edit', {'id': video.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="6">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <a href="{{ path('video_new') }}">Create new</a>
+	<a href="{{ path('video_new') }}">Create new</a>
 {% endblock %}

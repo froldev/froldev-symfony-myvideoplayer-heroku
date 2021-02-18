@@ -20,7 +20,7 @@
 					<div class="card-img-overlay d-flex flex-column justify-content-evenly">
 						<h3 class="card-title d-flex justify-content-center">{{ category.name|upper }}</h5>
 						<div class="d-flex justify-content-evenly">
-							<a href="{{ path('category_edit', {'id': category.id}) }}" class="card-link btn btn-success" type="button">Modifier</a>
+							<a href="{{ path('category_edit', {'slug': category.slug}) }}" class="card-link btn btn-success" type="button">Modifier</a>
 							{{ include('category/_delete_form.html.twig') }}
 						</div>
 					</div>
