@@ -18,7 +18,7 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom : '])
-            ->add('imageFile', VichFileType::class, ['label' => 'Image : (dimensions préconisées : 800 x 400) '])
+            ->add('imageFile', VichFileType::class, ['label' => 'Image : (dimensions préconisées : 1000 x 400) '])
             ->add('description', CKEditorType::class, ['label' => 'Description : ', 'config' => ['toolbar' => 'standard']])
             ->add('position', IntegerType::class, ['label' => 'Position : ']);
     }

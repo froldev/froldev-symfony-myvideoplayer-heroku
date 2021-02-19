@@ -12,9 +12,11 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(CategoryRepository $categoryRepository): Response
     {
-        return $this->render('home/index.html.twig');
+        return $this->render('home/index.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+        ]);
     }
 
     public function renderNavBar(CategoryRepository $categoryRepository): Response
