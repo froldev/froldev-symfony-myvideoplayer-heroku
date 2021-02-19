@@ -59,7 +59,7 @@ class Video
      * @Assert\Url(message="Veuillez indiquer une url valide")
      * @Assert\NotBlank(message="Veuillez indiquer une url pour l\'auteur")
      */
-    private $link;
+    private $link_author;
 
     /**
      * @Gedmo\Slug(fields={"name"})
@@ -130,14 +130,14 @@ class Video
         return $this;
     }
 
-    public function getLink(): ?string
+    public function getLinkAuthor(): ?string
     {
-        return $this->link;
+        return $this->link_author;
     }
 
-    public function setLink(?string $link): self
+    public function setLinkAuthor(?string $link_author): self
     {
-        $this->link = $link;
+        $this->link_author = $link_author;
 
         return $this;
     }

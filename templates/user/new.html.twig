@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User
+{% endblock %}
+
+{% block body %}
+	<div class="row p2 mx-auto">
+		<h1>Nouvel Utilisateur</h1>
+	</div>
+	<div class="row p2 mx-auto">
+		{{ include('user/_form.html.twig') }}
+	</div>
+	<div class="row p2">
+		<a class="btn btn-dark col-2" href="{{ path('user_index') }}">Retour</a>
+	</div>
+{% endblock %}
