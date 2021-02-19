@@ -19,6 +19,7 @@
 				<tr>
 					<td>{{ user.username }}</td>
 					<td>{{ user.email }}</td>
+
 					<td>
 						<a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
 						{{ include('user/_delete_form.html.twig') }}
