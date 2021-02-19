@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user", name="user_")
@@ -28,16 +30,20 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET", "POST"})
      */
-    public function new(Request $request): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $em,
+        UserPasswordEncoderInterface $encoder
+    ): Response {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+            $em->persist($user);
+            $em->flush();
 
             return $this->redirectToRoute('user_index');
         }
@@ -49,25 +55,21 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="show", methods={"GET"})
-     */
-    public function show(User $user): Response
-    {
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, User $user): Response
-    {
+    public function edit(
+        Request $request,
+        EntityManagerInterface $em,
+        UserPasswordEncoderInterface $encoder,
+        User $user
+    ): Response {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+            $em->flush();
 
             return $this->redirectToRoute('user_index');
         }

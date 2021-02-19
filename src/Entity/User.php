@@ -4,16 +4,19 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\EqualTo;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity("email", message="Cet email existe déjà")
+ * @UniqueEntity(
+ *      fields={"email"}, 
+ *      message="Cet email existe déjà"
+ * )
  */
 class User implements UserInterface
 {
@@ -37,7 +40,6 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Vous devez indiquer un mot de passe")
      * @Assert\Length(
@@ -83,26 +85,21 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return $this->username;
     }
 
-    /**
-     * @see UserInterface
-     */
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return ['ROLE_USER'];
     }
 
     public function setRoles(array $roles): self
@@ -112,9 +109,6 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getPassword(): string
     {
         return (string) $this->password;
@@ -139,28 +133,11 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
+    public function getSalt()
     {
-        return null;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials()
     {
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
     }
 }
