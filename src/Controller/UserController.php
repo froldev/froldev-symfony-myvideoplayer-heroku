@@ -49,6 +49,7 @@ class UserController extends AbstractController
             $em->persist($user);
             $em->flush();
 
+            $this->addFlash("success", "L\'utilisateur " . $user->getUsername() . " a bien été ajouté !");
             return $this->redirectToRoute('user_index');
         }
 
@@ -72,17 +73,14 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($user->getEmail() !== User::URL_ADMIN) {
-                $hash = $encoder->encodePassword($user, $user->getPassword());
-                $user->setPassword($hash);
-                $em->flush();
-
-                $this->addFlash('success', 'L\'utilisateur a bien été créé !');
-            } else {
-                $this->addFlash('danger', 'Vous ne pouvez pas modifier lemail de l\'Adminsitrateur');
+            if ($user->getEmail() === User::URL_ADMIN) {
+                $user->setEmail(User::URL_ADMIN);
             }
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+            $em->flush();
 
-
+            $this->addFlash("success", "L\'utilisateur " . $user->getUsername() . " a bien été modifié !");
             return $this->redirectToRoute('user_index');
         }
 
@@ -105,7 +103,7 @@ class UserController extends AbstractController
                 $entityManager->flush();
             }
         }
-
+        $this->addFlash("success", "L'utilisateur " . $user->getUsername() . " a bien été supprimé !");
         return $this->redirectToRoute('user_index');
     }
 }

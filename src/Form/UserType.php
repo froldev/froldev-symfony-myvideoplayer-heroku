@@ -4,11 +4,12 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\DependencyInjection\Loader\Configurator\security;
 
 class UserType extends AbstractType
 {
@@ -20,13 +21,19 @@ class UserType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Veuillez indiquer votre Nom',
                 ],
-            ])
-            ->add('email', EmailType::class, [
-                'label' => 'Email : ',
-                'attr' => [
-                    'placeholder' => 'Veuillez indiquer votre Email',
-                ],
-            ])
+            ]);
+
+        if ($builder->getData()->getEmail() !== User::URL_ADMIN) {
+            $builder
+                ->add('email', EmailType::class, [
+                    'label' => 'Email : ',
+                    'attr' => [
+                        'placeholder' => 'Veuillez indiquer votre Email',
+                    ],
+                ]);
+        }
+
+        $builder
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de Passe : ',
                 'attr' => [
