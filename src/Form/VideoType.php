@@ -23,7 +23,10 @@ class VideoType extends AbstractType
             ->add('description', CKEditorType::class, ['label' => 'Description : ', 'config' => ['toolbar' => 'standard']])
             ->add('author', TextType::class, ['label' => 'Auteur de la vidéo : '])
             ->add('link_author', UrlType::class, ['label' => 'Lien de l\'auteur : '])
-            ->add('is_best', CheckboxType::class, ['label' => 'Souhaitez-vous l\'afficher dans les meilleures vidéos de la page d\'Accueil'])
+            ->add('is_best', CheckboxType::class, [
+                'label' => 'Souhaitez-vous l\'afficher dans les meilleures vidéos de la page d\'Accueil',
+                'required' => false,
+            ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
