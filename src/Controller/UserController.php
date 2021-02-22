@@ -26,6 +26,7 @@ class UserController extends AbstractController
     {
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            'urlAdmin' => User::URL_ADMIN,
         ]);
     }
 
@@ -71,9 +72,16 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $hash = $encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($hash);
-            $em->flush();
+            if ($user->getEmail() !== User::URL_ADMIN) {
+                $hash = $encoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($hash);
+                $em->flush();
+
+                $this->addFlash('success', 'L\'utilisateur a bien été créé !');
+            } else {
+                $this->addFlash('danger', 'Vous ne pouvez pas modifier lemail de l\'Adminsitrateur');
+            }
+
 
             return $this->redirectToRoute('user_index');
         }
@@ -90,10 +98,12 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
+        if ($user->getEmail() !== User::URL_ADMIN) {
+            if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($user);
+                $entityManager->flush();
+            }
         }
 
         return $this->redirectToRoute('user_index');
