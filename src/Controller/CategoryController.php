@@ -5,12 +5,12 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
-use App\Service\Sluger;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/category", name="category_")
@@ -19,6 +19,7 @@ class CategoryController extends AbstractController
 {
     /**
      * @Route("/", name="index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -29,6 +30,7 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/new", name="new", methods={"GET", "POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function new(Request $request, EntityManagerInterface $em): Response
     {
@@ -61,6 +63,7 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/{slug}/edit", name="edit", methods={"GET", "POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, EntityManagerInterface $em, Category $category): Response
     {
@@ -81,6 +84,7 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Category $category): Response
     {

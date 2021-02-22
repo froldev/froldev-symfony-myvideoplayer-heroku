@@ -6,10 +6,11 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -19,6 +20,7 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/", name="index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -29,6 +31,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/new", name="new", methods={"GET", "POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function new(
         Request $request,
@@ -56,6 +59,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(
         Request $request,
@@ -82,6 +86,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, User $user): Response
     {

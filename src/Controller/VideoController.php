@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\Video;
 use App\Form\VideoType;
 use App\Repository\VideoRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/video", name="video_")
@@ -17,6 +18,7 @@ class VideoController extends AbstractController
 {
     /**
      * @Route("/", name="index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(VideoRepository $videoRepository): Response
     {
@@ -27,6 +29,7 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/new", name="new", methods={"GET", "POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function new(Request $request): Response
     {
@@ -50,6 +53,7 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/{slug}", name="show", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function show(Video $video): Response
     {
@@ -60,6 +64,7 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/{slug}/edit", name="edit", methods={"GET", "POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Video $video): Response
     {
@@ -80,6 +85,7 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Video $video): Response
     {
