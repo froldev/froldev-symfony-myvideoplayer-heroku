@@ -11,16 +11,19 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class VideoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, ['label' => 'Nom de la vidéo : '])
-            ->add('url', UrlType::class, ['label' => 'Lien de la vidéo : '])
+            ->add('name', TextType::class, ['label' => 'Titre de la vidéo : '])
+            ->add('url', UrlType::class, ['label' => 'Url de la vidéo : '])
             ->add('description', CKEditorType::class, ['label' => 'Description : ', 'config' => ['toolbar' => 'standard']])
-            ->add('link', UrlType::class, ['label' => 'Lien de l\'auteur : '])
+            ->add('author', TextType::class, ['label' => 'Auteur de la vidéo : '])
+            ->add('link_author', UrlType::class, ['label' => 'Lien de l\'auteur : '])
+            ->add('is_best', CheckboxType::class, ['label' => 'Souhaitez-vous l\'afficher dans les meilleures vidéos de la page d\'Accueil'])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',

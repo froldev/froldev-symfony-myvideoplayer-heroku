@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Video;
 use App\Form\VideoType;
 use App\Repository\VideoRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,16 +32,16 @@ class VideoController extends AbstractController
      * @Route("/new", name="new", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $video = new Video();
+
         $form = $this->createForm(VideoType::class, $video);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($video);
-            $entityManager->flush();
+            $em->persist($video);
+            $em->flush();
 
             return $this->redirectToRoute('video_index');
         }
@@ -53,7 +54,6 @@ class VideoController extends AbstractController
 
     /**
      * @Route("/{slug}", name="show", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
      */
     public function show(Video $video): Response
     {
@@ -66,13 +66,13 @@ class VideoController extends AbstractController
      * @Route("/{slug}/edit", name="edit", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, Video $video): Response
+    public function edit(Request $request, Video $video, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(VideoType::class, $video);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em->flush();
 
             return $this->redirectToRoute('video_index');
         }

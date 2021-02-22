@@ -9,11 +9,13 @@
 			<h1>Liste des Catégories</h1>
 		</div>
 		<div class="row p2">
-			<h2>Ajouter une catégorie</h2>
+			<h2>Ajouter une catégorie :
+			</h2>
 			<a class="btn btn-primary col-2 mx-auto" href="{{ path('category_new') }}">Ajouter une catégorie</a>
 		</div>
 		<div class="row p2">
-			<h2>Catégorie</h2>
+			<h2>Catégorie :
+			</h2>
 			{% for category in categories %}
 				<div class="card col-lg-4 cold-md-6 col-sm-12 bg-dark text-white m-2 p-2">
 					<img src="{{ vich_uploader_asset(category) }}" class="card-img d-flex justify-content-center align-items-center" alt="{{ category.name }}" height="200">

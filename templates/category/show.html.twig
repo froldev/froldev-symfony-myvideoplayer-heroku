@@ -6,17 +6,18 @@
 
 {% block body %}
 	<div class="row p2 mx-auto">
-		<h1>{{ category.name|upper }}</h1>
+		<h1>Toutes les vidéos
+			{{ category.name|upper }}</h1>
 	</div>
 	<div class="row row-cols-1 row-cols-md-2 g-4">
-		{% for youtube in category.videos %}
+		{% for video in category.videos %}
 			<div class="col">
 				<div class="card shadow p-3 mb-5 bg-white rounded">
-					<a href="">
-						<img src="" class="card-img-top">
+					<a href="{{ path('video_show', {'slug': video.slug}) }}">
+						<img src="{{ video.url|video_thumbnail}}" class="card-img-top" alt="{{ video.name }}">
 					</a>
 					<div class="card-body">
-						<h5 class="card-title"></h5>
+						<h5 class="card-title">{{ video.name }}</h5>
 					</div>
 				</div>
 			</div>

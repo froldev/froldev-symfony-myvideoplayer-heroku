@@ -36,6 +36,12 @@ class Video
     private $name;
 
     /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Url(message="Veuillez indiquer une url valide")
      * @Assert\NotBlank(message="Veuillez indiquer une url")
@@ -48,11 +54,12 @@ class Video
      */
     private $description;
 
+
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="videos")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $category;
+    private $author;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -62,20 +69,15 @@ class Video
     private $link_author;
 
     /**
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(type="string", length=255)
-     */
-    private $slug;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $author;
-
-    /**
      * @ORM\Column(type="boolean")
      */
-    private $isBest;
+    private $is_best;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="videos")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     public function getId(): ?int
     {
@@ -168,12 +170,12 @@ class Video
 
     public function getIsBest(): ?bool
     {
-        return $this->isBest;
+        return $this->is_best;
     }
 
-    public function setIsBest(bool $isBest): self
+    public function setIsBest(bool $is_best): self
     {
-        $this->isBest = $isBest;
+        $this->is_best = $is_best;
 
         return $this;
     }
