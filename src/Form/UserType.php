@@ -16,36 +16,16 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, [
-                'label' => 'Nom : ',
-                'attr' => [
-                    'placeholder' => 'Veuillez indiquer votre Nom',
-                ],
-            ]);
+            ->add('username', TextType::class, ['label' => 'Nom : ',]);
 
         if ($builder->getData()->getEmail() !== User::URL_ADMIN) {
             $builder
-                ->add('email', EmailType::class, [
-                    'label' => 'Email : ',
-                    'attr' => [
-                        'placeholder' => 'Veuillez indiquer votre Email',
-                    ],
-                ]);
+                ->add('email', EmailType::class, ['label' => 'Email : ',]);
         }
 
         $builder
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de Passe : ',
-                'attr' => [
-                    'placeholder' => 'Veuillez indiquer votre Mot de Passe',
-                ],
-            ])
-            ->add('confirm_password', PasswordType::class, [
-                'label' => 'Confirmation du Mot de Passe : ',
-                'attr' => [
-                    'placeholder' => 'Veuillez confirmer votre Mot de Passe',
-                ],
-            ]);
+            ->add('password', PasswordType::class, ['label' => 'Mot de Passe : ',])
+            ->add('confirm_password', PasswordType::class, ['label' => 'Confirmation du Mot de Passe : ',]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

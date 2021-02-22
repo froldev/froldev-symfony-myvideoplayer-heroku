@@ -29,13 +29,15 @@
 					{% for user in users %}
 						<tr>
 							<td>
-								<i class="fas fa-user-circle text-secondary"></i>
-								{{user.username}}</td>
+								<i class="fas fa-user-circle fa-lg text-secondary"></i>
+								{{ user.username|capitalize }}
+							</td>
 							<td>
-								{{user.email}}</td>
+								{{user.email}}
+							</td>
 							<td class="d-flex">
 								<a class="btn mx-3" href="{{ path('user_edit', {'id': user.id}) }}">
-									<i class="fas fa-user-edit text-primary"></i>
+									<i class="fas fa-user-edit fa-lg text-success"></i>
 								</a>
 								{% if not (user.email == urlAdmin) %}
 									{{ include('user/_delete_form.html.twig') }}
@@ -43,9 +45,9 @@
 							</td>
 						</tr>
 					{% else %}
-						<div class="col-12">
-							<p>Aucun utilisateur</p>
-						</div>
+						<tr>
+							<td>Aucun utilisateur</td>
+						</tr>
 					{% endfor %}
 				</tbody>
 			</table>

@@ -16,28 +16,36 @@
 		<div class="row p2">
 			<h2>Vidéos :
 			</h2>
-			<div class="row row-cols-1 row-cols-md-2 g-4">
-				{% for video in videos %}
-					<div class="col">
-						<div class="card shadow p-3 mb-5 bg-white rounded">
-							<img src="{{ video.url|video_thumbnail}}" class="card-img-top" alt="{{ video.name }}">
-							<div class="card-body">
-								<h5 class="card-title">{{ video.name }}
-									<span class="badge bg-warning text-dark">{{video.category.name|upper}}</span>
-								</h5>
-								<div class="d-flex justify-content-evenly">
-									<a href="{{ path('video_edit', {'slug': video.slug}) }}" class="card-link btn btn-success" type="button">Modifier</a>
-									{{ include('video/_delete_form.html.twig') }}
-								</div>
-							</div>
-						</div>
-					</div>
-				{% else %}
-					<div class="col">
-						<p>Aucune vidéo</p>
-					</div>
-				{% endfor %}
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Titre</th>
+						<th scope="col">Catégorie</th>
+						<th scope="col">Auteur</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for video in videos %}
+						<tr>
+							<td>{{video.name|capitalize}}</td>
+							<td>{{video.category.name|capitalize}}</td>
+							<td>{{video.author|capitalize}}</td>
+							<td class="d-flex">
+								<a class="btn mx-3" href="{{ path('video_edit', {'slug': video.slug}) }}">
+									<i class="fas fa-edit fa-lg text-success"></i>
+								</a>
+								{{ include('video/_delete_form.html.twig') }}
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td>Aucune vidéo</td>
+						</tr>
+					</p>
+				</tbody>
 			</div>
-		</div>
-	</div>
-{% endblock %}
+		{% endfor %}
+	</tbody>
+</table></div></div>{% endblock %}
