@@ -20,6 +20,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface
 {
+
+    const URL_ADMIN = "admin@admin.fr";
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
