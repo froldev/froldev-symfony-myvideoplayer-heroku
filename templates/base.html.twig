@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="h-100 js-focus-visible">
 
 	<head>
 		<meta charset="UTF-8">
@@ -14,7 +14,7 @@
 		{% endblock %}
 	</head>
 
-	<body>
+	<body class="d-flex flex-column h-100">
 		{{ render(controller('App\\Controller\\HomeController::renderNavBar')) }}
 		<div class="container">
 			{% for label, messages in app.flashes %}
