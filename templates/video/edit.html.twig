@@ -5,15 +5,13 @@
 {% endblock %}
 
 {% block body %}
-	<div class="row p2 mx-auto">
-		<h1>Mise à jour :
-			{{ video.name }}
-		</h1>
+	<div class="row text-center pt-3 pb-3 mb-3 border-bottom bg-secondary text-white shadow">
+		<h2>Mise à jour</h2>
 	</div>
-	<div class="row p2 mx-auto">
-		{{ include('video/_form.html.twig', {'button_label': 'Mise à jour'}) }}
+	<div class="row mx-auto p-5 mb-3 border rounded-lg shadow">
+		{{ include('video/_form.html.twig', {'button_label': 'Modifier'}) }}
 	</div>
-	<div class="row p2">
-		<a class="btn btn-dark col-2" href="{{ path('video_index') }}">Retour</a>
+	<div class="row pt-3 pb-3 mb-5">
+		<a class="btn btn-dark col-2 rounded-lg shadow" href="{{ path('video_index') }}">Retour</a>
 	</div>
 {% endblock %}

@@ -20,17 +20,23 @@ class VideoType extends AbstractType
         $builder
             ->add('name', TextType::class, ['label' => 'Titre de la vidéo : '])
             ->add('url', UrlType::class, ['label' => 'Url de la vidéo : '])
-            ->add('description', CKEditorType::class, ['label' => 'Description : ', 'config' => ['toolbar' => 'standard']])
+            ->add('description', CKEditorType::class, [
+                'label' => 'Description : ',
+                'config' => ['toolbar' => 'standard']
+            ])
             ->add('author', TextType::class, ['label' => 'Auteur de la vidéo : '])
-            ->add('link_author', UrlType::class, ['label' => 'Lien de l\'auteur : '])
+            ->add('link_author', UrlType::class, ['label' => 'Url du site de l\'auteur : '])
             ->add('is_best', CheckboxType::class, [
-                'label' => 'Souhaitez-vous l\'afficher dans les meilleures vidéos de la page d\'Accueil',
                 'required' => false,
+                'label' => 'Cochez la case si vous souhaitez la voir apparaitre sur la page Accueil',
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
-                'label' => 'Catégorie'
+                'label' => 'Sélectionnez la catégorie : ',
+                'attr' => [
+                    'class' => 'form-select',
+                ]
             ]);
     }
 
