@@ -58,6 +58,7 @@ class UserController extends AbstractController
         return $this->render('user/new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'urlAdmin' => User::URL_ADMIN,
         ]);
     }
 
@@ -89,6 +90,7 @@ class UserController extends AbstractController
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'urlAdmin' => User::URL_ADMIN,
         ]);
     }
 
