@@ -91,7 +91,12 @@
 					<div class="bg-white rounded-lg p-5 shadow">
 						<h2 class="font-weight-bold text-center mb-1">{{category.name|capitalize}}</h2>
 						<h4 class="text-center mb-4">{{category.videos|length}}
-							vidéos</h4>
+							{% if category.videos|length > 1 %}
+								vidéos
+							{% else %}
+								vidéo
+							{% endif %}
+						</h4>
 						<div class="progress mx-auto" data-value='{{(category.videos|length*100)/videos|length}}'>
 
 							<div class="progress-bar" role="progressbar" style="width: {{(category.videos|length*100)/videos|length}}%;" aria-valuenow="{{(category.videos|length*100)/videos|length}}" aria-valuemin="0" aria-valuemax="100">{{(category.videos|length*100)/videos|length}}%</div>
