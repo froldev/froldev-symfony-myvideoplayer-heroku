@@ -103,8 +103,11 @@ class UserController extends AbstractController
      * @Route("/{id}/delete", name="delete", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(User $user, EntityManagerInterface $em, UserRepository $userRepository): Response
-    {
+    public function delete(
+        User $user,
+        EntityManagerInterface $em,
+        UserRepository $userRepository
+    ): Response {
         if ($user->getEmail() !== User::URL_ADMIN) {
             $em->remove($user);
             $em->flush();

@@ -24,7 +24,7 @@ function onSearchVideo(event) {
 				content = content + "<td>"+item.author+"</td>"
 				content = content + "<td class='d-flex justify-content-evenly'>"
 				content = content + "<a class='btn' href='/video/"+item.slug+"/edit'><i class='fas fa-edit fa-lg text-success'></i></a>"
-				content = content + "<button class='btn' href='/video/"+item.slug+"/delete'><i class='fas fa-trash fa-lg text-danger'></i></a>"
+				content = content + "<a class='btn js-delete' href='/video/"+item.slug+"/delete'><i class='fas fa-trash fa-lg text-danger'></i></a>"
 				content = content + "</td>"
 				content = content + "<tr>";
 			});

@@ -25,10 +25,13 @@ class VideoType extends AbstractType
                 'config' => ['toolbar' => 'standard']
             ])
             ->add('author', TextType::class, ['label' => 'Auteur de la vidéo : '])
-            ->add('link_author', UrlType::class, ['label' => 'Url du site de l\'auteur : '])
-            ->add('is_best', CheckboxType::class, [
+            ->add('link_author', UrlType::class, [
+                'label' => 'Url du site de l\'auteur : ',
                 'required' => false,
+            ])
+            ->add('is_best', CheckboxType::class, [
                 'label' => 'Cochez la case si vous souhaitez la voir apparaitre sur la page Accueil',
+                'required' => false,
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,

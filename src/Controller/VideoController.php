@@ -50,6 +50,7 @@ class VideoController extends AbstractController
             $em->persist($video);
             $em->flush();
 
+            $this->addFlash("success", "La vidéo " . $video->getName() . " a bien été ajoutée !");
             return $this->redirectToRoute('video_index');
         }
 
@@ -80,7 +81,7 @@ class VideoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-
+            $this->addFlash("success", "La vidéo " . $video->getName() . " a bien été modifiée !");
             return $this->redirectToRoute('video_index');
         }
 
@@ -91,18 +92,32 @@ class VideoController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}", name="delete", methods={"DELETE"})
+     * @Route("/{slug}/delete", name="delete", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, Video $video): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $video->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($video);
-            $entityManager->flush();
+    public function delete(
+        Video $video,
+        EntityManagerInterface $em,
+        VideoRepository $videoRepository
+    ): Response {
+
+        $em->remove($video);
+        $em->flush();
+
+        $videos = $videoRepository->findBy([], ['name' => 'ASC',]);
+
+        $arrayVideos = [];
+        foreach ($videos as $key => $value) {
+            $arrayVideos[$key]['id'] = $value->getId();
+            $arrayVideos[$key]['name'] = $value->getName();
+            $arrayVideos[$key]['slug'] = $value->getSlug();
+            $arrayVideos[$key]['author'] = $value->getAuthor();
+            $arrayVideos[$key]['category'] = $value->getCategory()->getName();
         }
 
-        return $this->redirectToRoute('video_index');
+        return new JsonResponse([
+            'videos' => $arrayVideos,
+        ]);
     }
 
     /**
