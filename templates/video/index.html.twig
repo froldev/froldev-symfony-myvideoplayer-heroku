@@ -45,9 +45,9 @@
 				<tbody id="table-video">
 					{% for video in videos %}
 						<tr>
-							<td>{{video.name|capitalize}}</td>
-							<td>{{video.category.name|capitalize}}</td>
-							<td>{{video.author|capitalize}}</td>
+							<td>{{video.name}}</td>
+							<td>{{video.category.name}}</td>
+							<td>{{video.author}}</td>
 							<td class="d-flex justify-content-evenly">
 								<a class="btn" href="{{ path('video_edit', {'slug': video.slug}) }}">
 									<i class="fas fa-edit fa-lg text-success"></i>
@@ -68,5 +68,5 @@
 
 {% block javascripts %}
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<script src="/js/search-video.js"></script>
+	<script src="/js/video-search.js"></script>
 {% endblock %}

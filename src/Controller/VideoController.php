@@ -26,7 +26,6 @@ class VideoController extends AbstractController
     public function index(VideoRepository $videoRepository, Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(SearchVideoType::class);
-        $form->handleRequest($request);
 
         return $this->render('video/index.html.twig', [
             'videos' => $videoRepository->findBy([], [
@@ -92,7 +91,7 @@ class VideoController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @Route("/{slug}", name="delete", methods={"DELETE"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Video $video): Response

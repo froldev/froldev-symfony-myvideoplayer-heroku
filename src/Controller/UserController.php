@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\SearchUserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -24,11 +26,14 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
+        $form = $this->createForm(SearchUserType::class);
+
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findBy([], [
                 'username' => 'ASC',
             ]),
             'urlAdmin' => User::URL_ADMIN,
+            'formUser' => $form->createView(),
         ]);
     }
 
@@ -109,5 +114,33 @@ class UserController extends AbstractController
         }
         $this->addFlash("success", "L'utilisateur " . $user->getUsername() . " a bien été supprimé !");
         return $this->redirectToRoute('user_index');
+    }
+
+    /**
+     * @Route("/searchUser/{search}", name="search_user", methods={"GET", "POST"})
+     */
+    public function searchVideo(?String $search, UserRepository $userRepository): Response
+    {
+        if ($search == "all") {
+            $users = $userRepository->findBy([], ['username' => 'ASC',]);
+        } else {
+            $users = $userRepository->findUserBySearch($search);
+        }
+
+        $arrayUsers = [];
+        foreach ($users as $key => $value) {
+            $arrayUsers[$key]['id'] = $value->getId();
+            $arrayUsers[$key]['username'] = $value->getUsername();
+            $arrayUsers[$key]['email'] = $value->getEmail();
+            if ($value->getEmail()  !== User::URL_ADMIN) {
+                $arrayUsers[$key]['delete'] = true;
+            } else {
+                $arrayUsers[$key]['delete'] = false;
+            }
+        }
+
+        return new JsonResponse([
+            'users' => $arrayUsers,
+        ]);
     }
 }
