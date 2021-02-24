@@ -18,8 +18,23 @@
 		<div class="row text-center pt-3 pb-3">
 			<h3 class="pb-2 text-decoration-underline">Liste des vidéos :
 			</h3>
-			<table class="table table-striped table-hover">
-				<thead>
+			<div class="row mt-2 mb-4">
+				{{ form_start(formVideo) }}
+				<div class="my-custom-class-for-errors">
+					{{ form_errors(formVideo) }}
+				</div>
+				<div class="row g-3 align-items-center">
+					<div class="col-lg-2 col-sm-12">
+						{{ form_label(formVideo.search,'Rechercher  : ', {'attr': {'class': 'form-label'}}) }}
+					</div>
+					<div class="col-lg-8 col-sm-10">
+						{{ form_widget(formVideo.search, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+				{{ form_end(formVideo) }}
+			</div>
+			<table class="table">
+				<thead class="table-secondary">
 					<tr>
 						<th scope="col">Titre</th>
 						<th scope="col">Catégorie</th>
@@ -27,7 +42,7 @@
 						<th scope="col">Actions</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="table-video">
 					{% for video in videos %}
 						<tr>
 							<td>{{video.name|capitalize}}</td>
@@ -44,9 +59,14 @@
 						<tr>
 							<td>Aucune vidéo</td>
 						</tr>
-					</p>
+					{% endfor %}
 				</tbody>
-			</div>
-		{% endfor %}
-	</tbody>
-</table></div></div>{% endblock %}
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="/js/search-video.js"></script>
+{% endblock %}
