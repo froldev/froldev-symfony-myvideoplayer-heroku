@@ -7,6 +7,7 @@ use App\Form\VideoType;
 use App\Form\SearchVideoType;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,18 +20,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class VideoController extends AbstractController
 {
+
+    const MAX_VIDEOS = 10;
+
     /**
      * @Route("/", name="index", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(VideoRepository $videoRepository, Request $request, EntityManagerInterface $em): Response
-    {
+    public function index(
+        VideoRepository $videoRepository,
+        Request $request,
+        PaginatorInterface $paginator
+    ): Response {
+
+        $videos = $paginator->paginate(
+            $videoRepository->findBy([], ['name' => 'ASC',]),
+            $request->query->getInt('page', 1),
+            self::MAX_VIDEOS
+        );
+
         $form = $this->createForm(SearchVideoType::class);
 
         return $this->render('video/index.html.twig', [
-            'videos' => $videoRepository->findBy([], [
-                'name' => 'ASC',
-            ]),
+            'videos' => $videos,
             'formVideo' => $form->createView(),
         ]);
     }

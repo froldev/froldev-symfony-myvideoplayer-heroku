@@ -20,6 +20,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
+    const MAX_USERS = 10;
+
     /**
      * @Route("/", name="index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
