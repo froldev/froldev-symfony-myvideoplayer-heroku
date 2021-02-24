@@ -56,7 +56,7 @@ class UserController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash("success", "L\'utilisateur " . $user->getUsername() . " a bien été ajouté !");
+            $this->addFlash("success", "L'utilisateur " . $user->getUsername() . " a bien été ajouté !");
             return $this->redirectToRoute('user_index');
         }
 
@@ -88,7 +88,7 @@ class UserController extends AbstractController
             $user->setPassword($hash);
             $em->flush();
 
-            $this->addFlash("success", "L\'utilisateur " . $user->getUsername() . " a bien été modifié !");
+            $this->addFlash("success", "L'utilisateur " . $user->getUsername() . " a bien été modifié !");
             return $this->redirectToRoute('user_index');
         }
 
@@ -100,20 +100,33 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="delete", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, User $user): Response
+    public function delete(User $user, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
         if ($user->getEmail() !== User::URL_ADMIN) {
-            if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($user);
-                $entityManager->flush();
+            $em->remove($user);
+            $em->flush();
+        }
+
+        $users = $userRepository->findBy([], ['username' => 'ASC',]);
+
+        $arrayUsers = [];
+        foreach ($users as $key => $value) {
+            $arrayUsers[$key]['id'] = $value->getId();
+            $arrayUsers[$key]['username'] = $value->getUsername();
+            $arrayUsers[$key]['email'] = $value->getEmail();
+            if ($value->getEmail() !== User::URL_ADMIN) {
+                $arrayUsers[$key]['delete'] = true;
+            } else {
+                $arrayUsers[$key]['delete'] = false;
             }
         }
-        $this->addFlash("success", "L'utilisateur " . $user->getUsername() . " a bien été supprimé !");
-        return $this->redirectToRoute('user_index');
+
+        return new JsonResponse([
+            'users' => $arrayUsers,
+        ]);
     }
 
     /**
