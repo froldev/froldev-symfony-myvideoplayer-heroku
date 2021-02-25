@@ -7,6 +7,7 @@ use App\Form\UserType;
 use App\Form\SearchUserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,14 +27,22 @@ class UserController extends AbstractController
      * @Route("/", name="index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(UserRepository $userRepository): Response
-    {
+    public function index(
+        UserRepository $userRepository,
+        Request $request,
+        PaginatorInterface $paginator
+    ): Response {
+
+        $users = $paginator->paginate(
+            $userRepository->findBy([], ['username' => 'ASC',]),
+            $request->query->getInt('page', 1),
+            self::MAX_USERS
+        );
+
         $form = $this->createForm(SearchUserType::class);
 
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findBy([], [
-                'username' => 'ASC',
-            ]),
+            'users' => $users,
             'urlAdmin' => User::URL_ADMIN,
             'formUser' => $form->createView(),
         ]);

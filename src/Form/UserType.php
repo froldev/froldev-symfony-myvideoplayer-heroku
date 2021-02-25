@@ -24,7 +24,7 @@ class UserType extends AbstractType
         }
 
         $builder
-            ->add('password', PasswordType::class, ['label' => 'Mot de Passe : ',])
+            ->add('password', PasswordType::class, ['label' => 'Mot de Passe : (8 caractères minimum) ',])
             ->add('confirm_password', PasswordType::class, ['label' => 'Confirmation du Mot de Passe : ',]);
     }
 
