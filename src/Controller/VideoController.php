@@ -62,7 +62,7 @@ class VideoController extends AbstractController
             $em->persist($video);
             $em->flush();
 
-            $this->addFlash("success", "La vidéo " . $video->getName() . " a bien été ajoutée !");
+            $this->addFlash("success", "La vidéo a bien été ajoutée !");
             return $this->redirectToRoute('video_index');
         }
 
@@ -93,7 +93,7 @@ class VideoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            $this->addFlash("success", "La vidéo " . $video->getName() . " a bien été modifiée !");
+            $this->addFlash("success", "La vidéo a bien été modifiée !");
             return $this->redirectToRoute('video_index');
         }
 
