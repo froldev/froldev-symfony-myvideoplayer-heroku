@@ -49,7 +49,7 @@ class Video
     private $url;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Veuillez indiquer une description")
      */
     private $description;

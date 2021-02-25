@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -34,13 +35,18 @@ class CategoryController extends AbstractController
      * @Route("/new", name="new", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $em,
+        CategoryRepository $categoryRepository
+    ): Response {
         $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category);
+        $form = $this
+            ->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $category->setPosition($categoryRepository->countCategories() + 1);
             $em->persist($category);
             $this->addFlash("success", "La catégorie " . $category->getName() . " a bien été ajoutée !");
             $em->flush();

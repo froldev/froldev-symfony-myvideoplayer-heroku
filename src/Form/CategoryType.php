@@ -3,14 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Category;
+use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class CategoryType extends AbstractType
 {
@@ -19,8 +20,13 @@ class CategoryType extends AbstractType
         $builder
             ->add('name', TextType::class, ['label' => 'Nom : '])
             ->add('imageFile', VichFileType::class, ['label' => 'Image : (dimensions préconisées : 1000 x 400) '])
-            ->add('description', CKEditorType::class, ['label' => 'Description : ', 'config' => ['toolbar' => 'standard']])
-            ->add('position', IntegerType::class, ['label' => 'Position : ']);
+            ->add('position', IntegerType::class, [
+                'label' => 'Position : ',
+                'attr' => [
+                    'class' => 'form-select',
+                ],
+
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

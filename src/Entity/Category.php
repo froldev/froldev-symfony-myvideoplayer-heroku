@@ -50,12 +50,6 @@ class Category
     private $imageName;
 
     /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="Veuillez indiquer une description")
-     */
-    private $description;
-
-    /**
      * @ORM\OneToMany(targetEntity=Video::class, mappedBy="category")
      */
     private $videos;
@@ -126,18 +120,6 @@ class Category
     public function getImageName(): ?string
     {
         return $this->imageName;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
     }
 
     /**
