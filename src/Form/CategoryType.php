@@ -19,13 +19,9 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom : '])
-            ->add('imageFile', VichFileType::class, ['label' => 'Image : (dimensions préconisées : 1000 x 400) '])
+            ->add('imageFile', VichFileType::class, ['label' => 'Image : (dimensions pour le caroussel : 1000 x 400) '])
             ->add('position', IntegerType::class, [
                 'label' => 'Position : ',
-                'attr' => [
-                    'class' => 'form-select',
-                ],
-
             ]);
     }
 

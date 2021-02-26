@@ -51,6 +51,8 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
+     * 1ere lettre des mots du username en majuscule
+     * email en minuscule
      */
     public function new(
         Request $request,
@@ -64,6 +66,8 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
+            $user->setUsername(ucwords(strtolower($user->getUsername())));
+            $user->setEmail(strtolower($user->getEmail()));
             $em->persist($user);
             $em->flush();
 
@@ -97,6 +101,8 @@ class UserController extends AbstractController
             }
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
+            $user->setUsername(ucwords(strtolower($user->getUsername())));
+            $user->setEmail(strtolower($user->getEmail()));
             $em->flush();
 
             $this->addFlash("success", "L'utilisateur " . $user->getUsername() . " a bien été modifié !");

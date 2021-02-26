@@ -7,10 +7,12 @@
 	{{ form_label(form.imageFile) }}
 	{{ form_widget(form.imageFile) }}
 </div>
-<div class="form-group mb-3">
-	{{ form_label(form.position) }}
-	{{ form_widget(form.position) }}
-</div>
+{% if position == true %}
+	<div class="form-group mb-3">
+		{{ form_label(form.position) }}
+		{{ form_widget(form.position) }}
+	</div>
+{% endif %}
 <div class=" d-flex justify-content-center">
 	<button class="btn btn-outline-primary btn-lg rounded-lg shadow">
 		{{ button_label|default('Enregistrer') }}

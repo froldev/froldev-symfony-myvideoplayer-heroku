@@ -50,6 +50,9 @@ class VideoController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
+     * 1ere lettre du titre de la video en masjuscule
+     * slug en minuscule
+     * 1ere lettre des mots de l'auteur en majuscule
      */
     public function new(Request $request, EntityManagerInterface $em): Response
     {
@@ -59,6 +62,9 @@ class VideoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $video->setName(ucfirst(strtolower($video->getName())));
+            $video->setSlug(strtolower($video->getSlug()));
+            $video->setAuthor(ucwords(strtolower($video->getAuthor())));
             $em->persist($video);
             $em->flush();
 
@@ -85,6 +91,9 @@ class VideoController extends AbstractController
     /**
      * @Route("/{slug}/edit", name="edit", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
+     * 1ere lettre du titre de la video en masjuscule
+     * slug en minuscule
+     * 1ere lettre des mots de l'auteur en majuscule
      */
     public function edit(Request $request, Video $video, EntityManagerInterface $em): Response
     {
@@ -92,6 +101,9 @@ class VideoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $video->setName(ucfirst(strtolower($video->getName())));
+            $video->setSlug(strtolower($video->getSlug()));
+            $video->setAuthor(ucwords(strtolower($video->getAuthor())));
             $em->flush();
             $this->addFlash("success", "La vidéo a bien été modifiée !");
             return $this->redirectToRoute('video_index');

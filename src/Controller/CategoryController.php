@@ -34,6 +34,9 @@ class CategoryController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
+     * nom avec 1ere lettre en majuscule
+     * slug en minuscule
+     * position en automatique
      */
     public function new(
         Request $request,
@@ -42,10 +45,13 @@ class CategoryController extends AbstractController
     ): Response {
         $category = new Category();
         $form = $this
-            ->createForm(CategoryType::class, $category);
+            ->createForm(CategoryType::class, $category)
+            ->remove('position');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $category->setName(ucfirst(strtolower($category->getName())));
+            $category->setSlug(strtolower($category->getSlug()));
             $category->setPosition($categoryRepository->countCategories() + 1);
             $em->persist($category);
             $this->addFlash("success", "La catégorie " . $category->getName() . " a bien été ajoutée !");
@@ -57,6 +63,7 @@ class CategoryController extends AbstractController
         return $this->render('category/new.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
+            'position' => false,
         ]);
     }
 
@@ -73,6 +80,8 @@ class CategoryController extends AbstractController
     /**
      * @Route("/{slug}/edit", name="edit", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
+     * nom avec 1ere lettre en majuscule
+     * slug en minuscule
      */
     public function edit(Request $request, EntityManagerInterface $em, Category $category): Response
     {
@@ -80,6 +89,8 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $category->setName(ucfirst(strtolower($category->getName())));
+            $category->setSlug(strtolower($category->getSlug()));
             $em->flush();
             $this->addFlash("success", "La catégorie " . $category->getName() . " a bien été modifiée !");
             return $this->redirectToRoute('category_index');
@@ -88,6 +99,7 @@ class CategoryController extends AbstractController
         return $this->render('category/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
+            'position' => true,
         ]);
     }
 

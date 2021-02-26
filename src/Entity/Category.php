@@ -90,7 +90,7 @@ class Category
 
     public function setName(string $name): self
     {
-        $this->name = strtolower($name);
+        $this->name = $name;
 
         return $this;
     }

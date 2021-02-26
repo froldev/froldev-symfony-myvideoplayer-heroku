@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+    const MAX_ITEMS_NAV = 4;
+
     /**
      * @Route("/", name="home")
      */
@@ -41,6 +43,7 @@ class HomeController extends AbstractController
     {
         return $this->render('bricks/_navbar.html.twig', [
             'categories' => $categoryRepository->findAll(),
+            'max' => self::MAX_ITEMS_NAV,
         ]);
     }
 
