@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Form\SearchCategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,10 +26,13 @@ class CategoryController extends AbstractController
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
+        $form = $this->createForm(SearchCategoryType::class);
+
         return $this->render('category/index.html.twig', [
             'categories' => $categoryRepository->findBy([], [
                 'position' => 'ASC',
             ]),
+            'formCategory' => $form->createView(),
         ]);
     }
 
@@ -114,10 +118,33 @@ class CategoryController extends AbstractController
         $em->remove($category);
         $em->flush();
 
-        $videos = $categoryRepository->findBy([], ['position' => 'ASC',]);
+        $categories = $categoryRepository->findBy([], ['position' => 'ASC',]);
 
         $arrayCategories = [];
-        foreach ($videos as $key => $value) {
+        foreach ($categories as $key => $value) {
+            $arrayCategories[$key]['name'] = $value->getName();
+            $arrayCategories[$key]['position'] = $value->getPosition();
+            $arrayCategories[$key]['slug'] = $value->getSlug();
+        }
+
+        return new JsonResponse([
+            'categories' => $arrayCategories,
+        ]);
+    }
+
+    /**
+     * @Route("/searchCategory/{search}", name="search_movie", methods={"GET", "POST"})
+     */
+    public function searchVideo(?String $search, CategoryRepository $categoryRepository): Response
+    {
+        if ($search == "all") {
+            $categories = $categoryRepository->findBy([], ['position' => 'ASC',]);
+        } else {
+            $categories = $categoryRepository->findCategoryBySearch($search);
+        }
+
+        $arrayCategories = [];
+        foreach ($categories as $key => $value) {
             $arrayCategories[$key]['name'] = $value->getName();
             $arrayCategories[$key]['position'] = $value->getPosition();
             $arrayCategories[$key]['slug'] = $value->getSlug();

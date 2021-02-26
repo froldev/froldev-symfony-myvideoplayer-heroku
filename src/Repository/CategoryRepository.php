@@ -27,4 +27,17 @@ class CategoryRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * @return Category[] Returns an array of User objects
+     */
+    public function findCategoryBySearch(string $value)
+    {
+        $queryBuilder = $this->createQueryBuilder("c")
+            ->where("c.name LIKE :value")
+            ->setParameter("value", "%" . $value . "%")
+            ->orderBy("c.position", "ASC")
+            ->getQuery();
+        return $queryBuilder->getResult();
+    }
 }
