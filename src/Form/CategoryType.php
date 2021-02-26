@@ -22,6 +22,7 @@ class CategoryType extends AbstractType
             ->add('imageFile', VichFileType::class, ['label' => 'Image : (dimensions pour le caroussel : 1000 x 400) '])
             ->add('position', IntegerType::class, [
                 'label' => 'Position : ',
+                'required' => false,
             ]);
     }
 

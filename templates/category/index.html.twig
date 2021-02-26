@@ -39,7 +39,7 @@
 								<a class="btn" href="{{ path('category_edit', {'slug': category.slug}) }}">
 									<i class="fas fa-edit fa-lg text-success"></i>
 								</a>
-								<a class="btn js-delete" href="{{ path('category_delete', {'id': category.id}) }}">
+								<a class="btn js-delete" href="{{ path('category_delete', {'slug': category.slug}) }}">
 									<i class="fas fa-trash fa-lg text-danger"></i>
 								</a>
 							</td>
@@ -56,5 +56,7 @@
 {% endblock %}
 
 {% block javascripts %}
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="/js/category-delete.js"></script>
 	<script src="/js/alert-animation.js"></script>
 {% endblock %}

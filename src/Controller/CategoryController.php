@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +36,6 @@ class CategoryController extends AbstractController
      * @Route("/new", name="new", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      * nom avec 1ere lettre en majuscule
-     * slug en minuscule
      * position en automatique
      */
     public function new(
@@ -51,8 +51,8 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $category->setName(ucfirst(strtolower($category->getName())));
-            $category->setSlug(strtolower($category->getSlug()));
             $category->setPosition($categoryRepository->countCategories() + 1);
+
             $em->persist($category);
             $this->addFlash("success", "La catégorie " . $category->getName() . " a bien été ajoutée !");
             $em->flush();
@@ -81,7 +81,6 @@ class CategoryController extends AbstractController
      * @Route("/{slug}/edit", name="edit", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      * nom avec 1ere lettre en majuscule
-     * slug en minuscule
      */
     public function edit(Request $request, EntityManagerInterface $em, Category $category): Response
     {
@@ -90,7 +89,6 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $category->setName(ucfirst(strtolower($category->getName())));
-            $category->setSlug(strtolower($category->getSlug()));
             $em->flush();
             $this->addFlash("success", "La catégorie " . $category->getName() . " a bien été modifiée !");
             return $this->redirectToRoute('category_index');
@@ -104,17 +102,29 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @Route("/{slug}/delete", name="delete", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, Category $category): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($category);
-            $entityManager->flush();
+    public function delete(
+        Category $category,
+        EntityManagerInterface $em,
+        CategoryRepository $categoryRepository
+    ): Response {
+
+        $em->remove($category);
+        $em->flush();
+
+        $videos = $categoryRepository->findBy([], ['position' => 'ASC',]);
+
+        $arrayCategories = [];
+        foreach ($videos as $key => $value) {
+            $arrayCategories[$key]['name'] = $value->getName();
+            $arrayCategories[$key]['position'] = $value->getPosition();
+            $arrayCategories[$key]['slug'] = $value->getSlug();
         }
 
-        return $this->redirectToRoute('category_index');
+        return new JsonResponse([
+            'categories' => $arrayCategories,
+        ]);
     }
 }
