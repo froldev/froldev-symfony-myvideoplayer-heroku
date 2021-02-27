@@ -86,14 +86,28 @@ class CategoryController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      * nom avec 1ere lettre en majuscule
      */
-    public function edit(Request $request, EntityManagerInterface $em, Category $category): Response
+    public function edit(Request $request, EntityManagerInterface $em, Category $category, CategoryRepository $categoryRepository): Response
     {
-        $form = $this->createForm(CategoryType::class, $category);
+        $position = $category->getPosition();
+
+        $arrayPositions = [];
+        $categories = $categoryRepository->findAll();
+        for ($i = 1; $i <= count($categories); $i++) {
+            $arrayPositions[$i] = $i;
+        }
+
+        $form = $this->createForm(CategoryType::class, $category, [
+            'positions' => array_flip($arrayPositions),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $otherCategory = $categoryRepository->findOneBy($categoryRepository->getIdByPosition($form->getData()->getPosition()));
+            $otherCategory->setPosition($position);
+
             $category->setName(ucfirst(strtolower($category->getName())));
             $em->flush();
+
             $this->addFlash("success", "La catégorie " . $category->getName() . " a bien été modifiée !");
             return $this->redirectToRoute('category_index');
         }
@@ -153,5 +167,15 @@ class CategoryController extends AbstractController
         return new JsonResponse([
             'categories' => $arrayCategories,
         ]);
+    }
+
+    private function getArrayPositions(CategoryRepository $categoryRepository): array
+    {
+        $arrayPositions = [];
+        $positions = $categoryRepository->getIdAndPositions();
+        foreach ($positions as $key => $value) {
+            $arrayPositions[$key] = $value['position'];
+        }
+        return $arrayPositions;
     }
 }

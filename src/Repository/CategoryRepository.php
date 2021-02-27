@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Expr\Cast\Array_;
 
 /**
  * @method Category|null find($id, $lockMode = null, $lockVersion = null)
@@ -39,5 +40,15 @@ class CategoryRepository extends ServiceEntityRepository
             ->orderBy("c.position", "ASC")
             ->getQuery();
         return $queryBuilder->getResult();
+    }
+
+    public function getIdByPosition(int $position)
+    {
+        return $this->createQueryBuilder("c")
+            ->select("c.id")
+            ->where("c.position = :position")
+            ->setParameter("position", $position)
+            ->getQuery()
+            ->getSingleResult();
     }
 }
