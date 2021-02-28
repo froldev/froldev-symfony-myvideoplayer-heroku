@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Form\SearchVideoType;
-use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use App\Repository\VideoRepository;
+use App\Repository\CategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends AbstractController
 {
@@ -69,6 +70,29 @@ class HomeController extends AbstractController
     {
         return $this->render('bricks/_footer.html.twig', [
             'categories' => $categoryRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/searchBestMovie/{search}", name="search_movie", methods={"GET", "POST"})
+     */
+    public function searchBestVideo(?String $search, VideoRepository $videoRepository): Response
+    {
+        if ($search == "all") {
+            $videos = $videoRepository->findBy(['is_best' => true]);
+        } else {
+            $videos = $videoRepository->findBestVideoBySearch($search);
+        }
+
+        $arrayVideos = [];
+        foreach ($videos as $key => $value) {
+            $arrayVideos[$key]['name'] = $value->getName();
+            $arrayVideos[$key]['slug'] = $value->getSlug();
+            $arrayVideos[$key]['url'] = $value->getUrl();
+        }
+
+        return new JsonResponse([
+            'videos' => $arrayVideos,
         ]);
     }
 }

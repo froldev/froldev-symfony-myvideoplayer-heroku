@@ -36,15 +36,18 @@ class VideoRepository extends ServiceEntityRepository
         return $queryBuilder->getResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?Video
+    /**
+     * @return Video[] Returns an array of Video objects
+     */
+    public function findBestVideoBySearch(string $value)
     {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter("val", "%".$value."%")
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $queryBuilder = $this->createQueryBuilder("v")
+            ->where("v.name LIKE :value")
+            ->andWhere("v.is_best = true")
+            ->orWhere("v.author LIKE :value")
+            ->setParameter("value", "%" . $value . "%")
+            ->orderBy("v.name", "ASC")
+            ->getQuery();
+        return $queryBuilder->getResult();
     }
-    */
 }

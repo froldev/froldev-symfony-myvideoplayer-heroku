@@ -39,7 +39,7 @@
 		{% endif %}
 
 		<div class="row p2">
-			<h2>Chercher une vidéo :
+			<h2>Rechercher dans les meilleures vidéos :
 			</h2>
 			<div class="row mt-2 mb-4">
 				{{ form_start(formVideo) }}
@@ -66,7 +66,7 @@
 					<div class="col">
 						<div class="card shadow p-3 mb-5 bg-white rounded">
 							<a href="{{ path('video_show', {'slug': video.slug}) }}">
-								<img src="{{ video.url|video_thumbnail}}" class="card-img-top" alt="{{ video.name }}">
+								<img src="{{ video.url|video_thumbnail}}" class="card-img-top" alt="{{ video.name }}"/>
 							</a>
 							<div class="card-body">
 								<h5 class="card-title" style="height: 48px;">{{ video.name|u.truncate(65, '...', false) }}</h5>
@@ -77,4 +77,9 @@
 			</div>
 		</div>
 	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="/js/home-video-search.js"></script>
 {% endblock %}

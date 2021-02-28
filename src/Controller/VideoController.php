@@ -160,6 +160,7 @@ class VideoController extends AbstractController
             $arrayVideos[$key]['id'] = $value->getId();
             $arrayVideos[$key]['name'] = $value->getName();
             $arrayVideos[$key]['slug'] = $value->getSlug();
+            $arrayVideos[$key]['url'] = $value->getUrl();
             $arrayVideos[$key]['author'] = $value->getAuthor();
             $arrayVideos[$key]['category'] = $value->getCategory()->getName();
         }
