@@ -39,11 +39,42 @@
 		{% endif %}
 
 		<div class="row p2">
-			<h2>Chercher une vidéo</h2>
+			<h2>Chercher une vidéo :
+			</h2>
+			<div class="row mt-2 mb-4">
+				{{ form_start(formVideo) }}
+				<div class="my-custom-class-for-errors">
+					{{ form_errors(formVideo) }}
+				</div>
+				<div class="row g-3 align-items-center">
+					<div class="col-lg-2 col-sm-12">
+						{{ form_label(formVideo.search,'Rechercher  : ', {'attr': {'class': 'form-label'}}) }}
+					</div>
+					<div class="col-lg-8 col-sm-10">
+						{{ form_widget(formVideo.search, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+				{{ form_end(formVideo) }}
+			</div>
 		</div>
 
-		<div class="row p2">
-			<h2>Les meilleures vidéos</h2>
+		<div id="videos" class="row p2">
+			<h2>Les meilleures vidéos :
+			</h2>
+			<div class="row row-cols-1 row-cols-md-3 g-2">
+				{% for video in videos %}
+					<div class="col">
+						<div class="card shadow p-3 mb-5 bg-white rounded">
+							<a href="{{ path('video_show', {'slug': video.slug}) }}">
+								<img src="{{ video.url|video_thumbnail}}" class="card-img-top" alt="{{ video.name }}">
+							</a>
+							<div class="card-body">
+								<h5 class="card-title" style="height: 48px;">{{ video.name|u.truncate(65, '...', false) }}</h5>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
 		</div>
 	</div>
 {% endblock %}
