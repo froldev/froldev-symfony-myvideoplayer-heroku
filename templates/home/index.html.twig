@@ -17,69 +17,67 @@
 					<div class="carousel-inner">
 						{% for key, category in categories %}
 							<div class="carousel-item {% if key == 0 %}active{% endif %}">
+								<a href="{{ path('category_show', { 'slug' : category.name }) }}" title="{{ category.name }}"/>
 								<img src="{{ vich_uploader_asset(category) }}" class="d-block w-100" height="400" alt="{{ category.name}}" loading="lazy">
 								<div class="carousel-caption d-none d-md-block">
-									<h3 class="bg-secondary p-2">{{ category.name|upper }}</h3>
+									<h3 class="bg-secondary p-2">{{ category.name }}</h3>
 								</div>
-							</div>
-						{% endfor %}
-					</div>
-					{% if categories|length > 1 %}
-						<button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Previous</span>
-						</button>
-						<button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Next</span>
-						</button>
-					{% endif %}
+							</a>
+						</div>
+					{% endfor %}
 				</div>
-			</div>
-		{% endif %}
-
-		<div class="row p2">
-			<h2>Rechercher dans les meilleures vidéos :
-			</h2>
-			<div class="row mt-2 mb-4">
-				{{ form_start(formVideo) }}
-				<div class="my-custom-class-for-errors">
-					{{ form_errors(formVideo) }}
-				</div>
-				<div class="row g-3 align-items-center">
-					<div class="col-lg-2 col-sm-12">
-						{{ form_label(formVideo.search,'Rechercher  : ', {'attr': {'class': 'form-label'}}) }}
-					</div>
-					<div class="col-lg-8 col-sm-10">
-						{{ form_widget(formVideo.search, {'attr': {'class': 'form-control'}}) }}
-					</div>
-				</div>
-				{{ form_end(formVideo) }}
+				{% if categories|length > 1 %}
+					<button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				{% endif %}
 			</div>
 		</div>
+	{% endif %}
 
-		<div id="videos" class="row p2">
-			<h2>Les meilleures vidéos :
-			</h2>
-			<div class="row row-cols-1 row-cols-md-3 g-2">
-				{% for video in videos %}
-					<div class="col">
-						<div class="card shadow p-3 mb-5 bg-white rounded">
-							<a href="{{ path('video_show', {'slug': video.slug}) }}">
-								<img src="{{ video.url|video_thumbnail}}" class="card-img-top" alt="{{ video.name }}"/>
-							</a>
-							<div class="card-body">
-								<h5 class="card-title" style="height: 48px;">{{ video.name|u.truncate(65, '...', false) }}</h5>
-							</div>
-						</div>
-					</div>
-				{% endfor %}
+	<div class="row p2">
+		<h2>Rechercher dans les meilleures vidéos :
+		</h2>
+		<div class="row mt-2 mb-4">
+			{{ form_start(formVideo) }}
+			<div class="my-custom-class-for-errors">
+				{{ form_errors(formVideo) }}
 			</div>
+			<div class="row g-3 align-items-center">
+				<div class="col-lg-2 col-sm-12">
+					{{ form_label(formVideo.search,'Rechercher  : ', {'attr': {'class': 'form-label'}}) }}
+				</div>
+				<div class="col-lg-8 col-sm-10">
+					{{ form_widget(formVideo.search, {'attr': {'class': 'form-control'}}) }}
+				</div>
+			</div>
+			{{ form_end(formVideo) }}
 		</div>
 	</div>
-{% endblock %}
 
-{% block javascripts %}
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<script src="/js/home-video-search.js"></script>
-{% endblock %}
+	<div id="videos" class="row p2">
+		<h2>Les meilleures vidéos :
+		</h2>
+		<div class="row row-cols-1 row-cols-md-3 g-2">
+			{% for video in videos %}
+				<div class="col">
+					<div class="card shadow p-3 mb-5 bg-white rounded">
+						<a href="{{ path('video_show', {'slug': video.slug}) }}">
+							<img src="{{ video.url|video_thumbnail}}" class="card-img-top" alt="{{ video.name }}"/>
+						</a>
+						<div class="card-body">
+							<h5 class="card-title" style="height: 48px;">{{ video.name|u.truncate(65, '...', false) }}</h5>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>{% endblock %}{% block javascripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/js/home-video-search.js"></script>{% endblock %}
