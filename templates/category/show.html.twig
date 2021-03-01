@@ -6,22 +6,40 @@
 {% endblock %}
 
 {% block body %}
-	<div class="row p2 mx-auto">
-		<h1>Toutes les vidéos
-			{{ category.name|upper }}</h1>
+	<div class="row p-2 mb-3">
+		<div class="col-12 text-center text-white bg-dark pt-2 pb-2">
+			<h1>{{ category.name|upper }}</h1>
+			<img class="rounded-circle" src="{{ vich_uploader_asset(category) }}" alt="{{ category.name }}" width="300px">
+		</div>
 	</div>
-	<div class="row row-cols-1 row-cols-md-2 g-4">
-		{% for video in category.videos %}
-			<div class="col">
-				<div class="card shadow p-3 mb-5 bg-white rounded">
-					<a href="{{ path('video_show', {'slug': video.slug}) }}">
-						<img src="{{ video.url|video_thumbnail}}" class="card-img-top" alt="{{ video.name }}">
-					</a>
-					<div class="card-body">
-						<h5 class="card-title">{{ video.name }}</h5>
+	<div id="videos-category" class="row p2 mb-3">
+		<h2>
+			{% if videos|length == 0 %}
+				Aucune vidéo
+			{% elseif videos|length > 1 %}
+				{{videos|length}}
+				vidéos :
+			{% else %}
+				{{videos|length}}
+				vidéo :
+			{% endif %}
+		</h2>
+		<div class="row row-cols-1 row-cols-md-3 g-2">
+			{% for video in videos %}
+				<div class="col">
+					<div class="card shadow p-3 mb-5 bg-white rounded">
+						<a href="{{ path('video_show', {'slug': video.slug}) }}">
+							<img src="{{ video.url|video_thumbnail}}" height="222" class="card-img-top" alt="{{ video.name }}">
+						</a>
+						<div class="card-body">
+							<h5 class="card-title" style="height: 48px;">{{ video.name|u.truncate(65, '...', false) }}</h5>
+						</div>
 					</div>
 				</div>
-			</div>
-		{% endfor %}
+			{% endfor %}
+		</div>
+	</div>
+	<div class="d-flex justify-content-end mb-3">
+		{{ knp_pagination_render(videos) }}
 	</div>
 {% endblock %}

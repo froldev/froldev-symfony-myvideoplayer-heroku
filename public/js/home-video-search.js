@@ -28,7 +28,7 @@ function onSearchVideo(event) {
 				content = content + "<div class='col'>";
 				content = content + "<div class='card shadow p-3 mb-5 bg-white rounded'>"
 				content = content + "<a href='/video/"+item.slug+"'>"
-				content = content + "<img src='"+scraptUrl(item.url)+"' class='card-img-top' alt='"+item.name+"' />"
+				content = content + "<img src='"+scraptUrl(item.url)+"' height='222' class='card-img-top' alt='"+item.name+"' />"
 				content = content + "</a>"
 				content = content + "<div class='card-body'>"
 				if (item.name.length > maxLength) {

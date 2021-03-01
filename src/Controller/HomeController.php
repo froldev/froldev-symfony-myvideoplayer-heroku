@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     const MAX_ITEMS_NAV = 4;
-    const MAX_HOME_VIDEOS = 6;
+    const MAX_HOME_VIDEOS = 9;
 
     /**
      * @Route("/", name="home")

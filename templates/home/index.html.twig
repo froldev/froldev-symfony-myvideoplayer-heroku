@@ -9,11 +9,13 @@
 		{% if categories|length > 0 %}
 			<div class="row mb-3 p2 mx-auto">
 				<div id="carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-					<div class="carousel-indicators">
-						{% for key, category in categories %}
-							<button type="button" data-bs-target="#carousel" data-bs-slide-to="{{ key }}" {% if key == 0 %} class="active" {% endif %} aria-current="true" aria-label="Slide {{ key + 1 }}"></button>
-						{% endfor %}
-					</div>
+					{% if categories|length > 1 %}
+						<div class="carousel-indicators">
+							{% for key, category in categories %}
+								<button type="button" data-bs-target="#carousel" data-bs-slide-to="{{ key }}" {% if key == 0 %} class="active" {% endif %} aria-current="true" aria-label="Slide {{ key + 1 }}"></button>
+							{% endfor %}
+						</div>
+					{% endif %}
 					<div class="carousel-inner">
 						{% for key, category in categories %}
 							<div class="carousel-item {% if key == 0 %}active{% endif %}">
@@ -68,7 +70,7 @@
 				<div class="col">
 					<div class="card shadow p-3 mb-5 bg-white rounded">
 						<a href="{{ path('video_show', {'slug': video.slug}) }}">
-							<img src="{{ video.url|video_thumbnail}}" class="card-img-top" alt="{{ video.name }}"/>
+							<img src="{{ video.url|video_thumbnail}}" height="222" class="card-img-top" alt="{{ video.name }}"/>
 						</a>
 						<div class="card-body">
 							<h5 class="card-title" style="height: 48px;">{{ video.name|u.truncate(65, '...', false) }}</h5>
@@ -79,5 +81,4 @@
 		</div>
 	</div>
 </div>{% endblock %}{% block javascripts %}
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/js/home-video-search.js"></script>{% endblock %}

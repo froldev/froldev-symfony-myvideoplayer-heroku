@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Form\SearchCategoryType;
+use App\Repository\VideoRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,6 +22,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class CategoryController extends AbstractController
 {
+    const MAX_CATEGORY_VIDEOS = 9;
+
     /**
      * @Route("/", name="index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
@@ -74,10 +78,21 @@ class CategoryController extends AbstractController
     /**
      * @Route("/{slug}", name="show", methods={"GET"})
      */
-    public function show(Category $category): Response
-    {
+    public function show(
+        Category $category,
+        Request $request,
+        VideoRepository $videoRepository,
+        PaginatorInterface $paginator
+    ): Response {
+        $videos = $paginator->paginate(
+            $category->getVideos(),
+            $request->query->getInt('page', 1),
+            self::MAX_CATEGORY_VIDEOS
+        );
+
         return $this->render('category/show.html.twig', [
             'category' => $category,
+            'videos' => $videos,
         ]);
     }
 
