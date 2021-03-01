@@ -7,7 +7,8 @@ function onSearchUser(event) {
 		value = "all";
 	}
 
-   	const url = "/user/searchUser/"+value;
+	const entity = "user";
+   	const url = "/"+entity+"/searchUser/"+value;
     const tableContent = document.querySelector('tbody');
 
     axios.get(url).then(function(response) {
@@ -22,9 +23,9 @@ function onSearchUser(event) {
 				content = content + "<td>"+item.username+"</td>"
 				content = content + "<td>"+item.email+"</td>"
 				content = content + "<td class='d-flex justify-content-evenly'>"
-				content = content + "<a class='btn' href='/user/"+item.id+"/edit'><i class='fas fa-user-edit fa-lg text-success'></i></a>"
+				content = content + "<a class='btn' href='/"+entity+"/"+item.id+"/edit'><i class='fas fa-user-edit fa-lg text-success'></i></a>"
 				if (item.delete == true) {
-					content = content + "<a class='btn js-delete' href='/user/"+item.id+"/delete'><i class='fas fa-trash fa-lg text-danger'></i></a>"
+					content = content + "<a class='btn js-delete' href='/"+entity+"/"+item.id+"/delete'><i class='fas fa-trash fa-lg text-danger'></i></a>"
 				}
 				content = content + "</td>"
 				content = content + "<tr>";
