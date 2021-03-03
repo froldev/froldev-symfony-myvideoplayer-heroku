@@ -48,7 +48,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/homepage", name="home_admin")
+     * @Route("/dashboard", name="home_admin")
      */
     public function indexAdmin(
         CategoryRepository $categoryRepository,
@@ -91,7 +91,7 @@ class HomeController extends AbstractController
 
         $arrayVideos = [];
         foreach ($videos as $key => $value) {
-            $arrayVideos[$key]['name'] = $value->getName();
+            $arrayVideos[$key]['title'] = $value->getTitle();
             $arrayVideos[$key]['slug'] = $value->getSlug();
             $arrayVideos[$key]['url'] = $value->getUrl();
         }

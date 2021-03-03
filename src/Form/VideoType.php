@@ -18,19 +18,19 @@ class VideoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, ['label' => 'Titre de la vidéo : '])
+            ->add('title', TextType::class, ['label' => 'Titre de la vidéo : '])
             ->add('url', UrlType::class, ['label' => 'Url de la vidéo : '])
             ->add('description', CKEditorType::class, [
                 'label' => 'Description : ',
                 'config' => ['toolbar' => 'standard']
             ])
             ->add('author', TextType::class, ['label' => 'Auteur de la vidéo : '])
-            ->add('link_author', UrlType::class, [
+            ->add('author_link', UrlType::class, [
                 'label' => 'Url du site de l\'auteur : ',
                 'required' => false,
             ])
             ->add('is_best', CheckboxType::class, [
-                'label' => 'Cochez la case si vous souhaitez la voir apparaitre sur la page Accueil',
+                'label' => 'Cochez la case si vous souhaitez la voir apparaitre dans les meilleures vidéos sur la page Accueil',
                 'required' => false,
             ])
             ->add('category', EntityType::class, [

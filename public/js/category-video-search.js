@@ -7,9 +7,11 @@ function onSearchVideoByCategory(event) {
 		value = "all";
 	}
 
-	let category = window.location.pathname;
+	/* let category = window.location.pathname;
 	category = category.replace("/category/", "");
-   	const url = "/category/"+category+"/searchMovieByCategory/"+value;
+   	const url = "/category/"+category+"/searchMovieByCategory/"+value; */
+
+	const url = window.location+"/searchMovieByCategory/"+value;
     const listOfVideos = document.querySelector('#videos-category');
 	const maxLength = 62;
 
@@ -37,13 +39,13 @@ function onSearchVideoByCategory(event) {
 				content = content + "<div class='col'>";
 				content = content + "<div class='card shadow p-3 mb-5 bg-white rounded'>"
 				content = content + "<a href='/video/"+item.slug+"'>"
-				content = content + "<img src='"+scraptUrl(item.url)+"' height='222' class='card-img-top' alt='"+item.name+"' />"
+				content = content + "<img src='"+scraptUrl(item.url)+"' height='222' class='card-img-top' alt='"+item.title+"' />"
 				content = content + "</a>"
 				content = content + "<div class='card-body'>"
-				if (item.name.length > maxLength) {
-					item.name = item.name.substring(0, maxLength) + "...";
+				if (item.title.length > maxLength) {
+					item.title = item.title.substring(0, maxLength) + "...";
 				}
-				content = content + "<h5 class='card-title' style='height: 48px;'>"+item.name+"</h5>"
+				content = content + "<h5 class='card-title' style='height: 48px;'>"+item.title+"</h5>"
 				content = content + "</div></div></div>"				
 			});
 		}

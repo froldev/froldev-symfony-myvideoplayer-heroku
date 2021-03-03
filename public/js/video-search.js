@@ -20,7 +20,7 @@ function onSearchVideo(event) {
 		if (items.length > 0) {
 			items.forEach(function(item) {
 				content = content + "<tr>";
-				content = content + "<td>"+item.name+"</td>"
+				content = content + "<td>"+item.title+"</td>"
 				content = content + "<td>"+item.category+"</td>"
 				content = content + "<td>"+item.author+"</td>"
 				content = content + "<td class='d-flex justify-content-evenly'>"

@@ -64,16 +64,18 @@
 
 	<div id="videos" class="row p2">
 		<h2>Les meilleures vidéos :
+			{{videos|length}}
+			vidéos
 		</h2>
 		<div class="row row-cols-1 row-cols-md-3 g-2">
 			{% for video in videos %}
 				<div class="col">
 					<div class="card shadow p-3 mb-5 bg-white rounded">
 						<a href="{{ path('video_show', {'slug': video.slug}) }}">
-							<img src="{{ video.url|video_thumbnail}}" height="222" class="card-img-top" alt="{{ video.name }}"/>
+							<img src="{{ video.url|video_thumbnail}}" height="222" class="card-img-top" alt="{{ video.title }}"/>
 						</a>
 						<div class="card-body">
-							<h5 class="card-title" style="height: 48px;">{{ video.name|u.truncate(65, '...', false) }}</h5>
+							<h5 class="card-title" style="height: 48px;">{{ video.title|u.truncate(65, '...', false) }}</h5>
 						</div>
 					</div>
 				</div>

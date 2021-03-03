@@ -16,7 +16,7 @@
 
 	<body class="d-flex flex-column h-100">
 		{{ render(controller('App\\Controller\\HomeController::renderNavBar')) }}
-		<div class="container " style="margin-top: 60px;">
+		<main class="container" style="margin-top: 60px;">
 			{% for label, messages in app.flashes %}
 				{% for message in messages %}
 					<div class="alert alert-{{ label }}" role="alert">

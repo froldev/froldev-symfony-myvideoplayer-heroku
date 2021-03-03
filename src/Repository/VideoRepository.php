@@ -28,10 +28,10 @@ class VideoRepository extends ServiceEntityRepository
             ->join("v.category", "c")
             ->addSelect("c")
             ->where("c.name LIKE :value")
-            ->orWhere("v.name LIKE :value")
+            ->orWhere("v.title LIKE :value")
             ->orWhere("v.author LIKE :value")
             ->setParameter("value", "%" . $value . "%")
-            ->orderBy("v.name", "ASC")
+            ->orderBy("v.title", "ASC")
             ->getQuery();
         return $queryBuilder->getResult();
     }
@@ -42,11 +42,11 @@ class VideoRepository extends ServiceEntityRepository
     public function findBestVideoBySearch(string $value)
     {
         $queryBuilder = $this->createQueryBuilder("v")
-            ->where("v.name LIKE :value")
+            ->where("v.title LIKE :value")
             ->andWhere("v.is_best = true")
             ->orWhere("v.author LIKE :value")
             ->setParameter("value", "%" . $value . "%")
-            ->orderBy("v.name", "ASC")
+            ->orderBy("v.title", "ASC")
             ->getQuery();
         return $queryBuilder->getResult();
     }

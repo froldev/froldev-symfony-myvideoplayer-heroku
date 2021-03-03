@@ -34,7 +34,7 @@ class VideoController extends AbstractController
     ): Response {
 
         $videos = $paginator->paginate(
-            $videoRepository->findBy([], ['name' => 'ASC',]),
+            $videoRepository->findBy([], ['title' => 'ASC',]),
             $request->query->getInt('page', 1),
             self::MAX_VIDEOS
         );
@@ -62,7 +62,7 @@ class VideoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $video->setName(ucfirst(strtolower($video->getName())));
+            $video->setTitle(ucfirst(strtolower($video->getTitle())));
             $video->setSlug(strtolower($video->getSlug()));
             $video->setAuthor(ucwords(strtolower($video->getAuthor())));
             $em->persist($video);
@@ -101,7 +101,7 @@ class VideoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $video->setName(ucfirst(strtolower($video->getName())));
+            $video->setTitle(ucfirst(strtolower($video->getTitle())));
             $video->setSlug(strtolower($video->getSlug()));
             $video->setAuthor(ucwords(strtolower($video->getAuthor())));
             $em->flush();
@@ -128,12 +128,12 @@ class VideoController extends AbstractController
         $em->remove($video);
         $em->flush();
 
-        $videos = $videoRepository->findBy([], ['name' => 'ASC',]);
+        $videos = $videoRepository->findBy([], ['title' => 'ASC',]);
 
         $arrayVideos = [];
         foreach ($videos as $key => $value) {
             $arrayVideos[$key]['id'] = $value->getId();
-            $arrayVideos[$key]['name'] = $value->getName();
+            $arrayVideos[$key]['title'] = $value->getTitle();
             $arrayVideos[$key]['slug'] = $value->getSlug();
             $arrayVideos[$key]['author'] = $value->getAuthor();
             $arrayVideos[$key]['category'] = $value->getCategory()->getName();
@@ -150,7 +150,7 @@ class VideoController extends AbstractController
     public function searchVideo(?String $search, VideoRepository $videoRepository): Response
     {
         if ($search == "all") {
-            $videos = $videoRepository->findBy([], ['name' => 'ASC',]);
+            $videos = $videoRepository->findBy([], ['title' => 'ASC',]);
         } else {
             $videos = $videoRepository->findVideoBySearch($search);
         }
@@ -158,7 +158,7 @@ class VideoController extends AbstractController
         $arrayVideos = [];
         foreach ($videos as $key => $value) {
             $arrayVideos[$key]['id'] = $value->getId();
-            $arrayVideos[$key]['name'] = $value->getName();
+            $arrayVideos[$key]['title'] = $value->getTitle();
             $arrayVideos[$key]['slug'] = $value->getSlug();
             $arrayVideos[$key]['url'] = $value->getUrl();
             $arrayVideos[$key]['author'] = $value->getAuthor();

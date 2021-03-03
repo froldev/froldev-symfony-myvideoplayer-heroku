@@ -33,10 +33,10 @@ class Video
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez indiquer un nom à la vidéo")
      */
-    private $name;
+    private $title;
 
     /**
-     * @Gedmo\Slug(fields={"name"})
+     * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
@@ -64,9 +64,9 @@ class Video
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url(message="Veuillez indiquer une url valide")
-     * @Assert\NotBlank(message="Veuillez indiquer une url pour l\'auteur")
+     * @Assert\NotBlank(message="Veuillez indiquer une url pour l'auteur")
      */
-    private $link_author;
+    private $author_link;
 
     /**
      * @ORM\Column(type="boolean")
@@ -84,14 +84,14 @@ class Video
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(string $name): self
+    public function setTitle(string $title): self
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
@@ -132,14 +132,14 @@ class Video
         return $this;
     }
 
-    public function getLinkAuthor(): ?string
+    public function getAuthorLink(): ?string
     {
-        return $this->link_author;
+        return $this->author_link;
     }
 
-    public function setLinkAuthor(?string $link_author): self
+    public function setAuthorLink(?string $author_link): self
     {
-        $this->link_author = $link_author;
+        $this->author_link = $author_link;
 
         return $this;
     }

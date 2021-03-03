@@ -215,7 +215,7 @@ class CategoryController extends AbstractController
 
         $arrayVideos = [];
         foreach ($videos as $key => $value) {
-            $arrayVideos[$key]['name'] = $value['name'];
+            $arrayVideos[$key]['title'] = $value['title'];
             $arrayVideos[$key]['slug'] = $value['slug'];
             $arrayVideos[$key]['url'] = $value['url'];
         }

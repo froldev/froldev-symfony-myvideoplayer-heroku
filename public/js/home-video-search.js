@@ -16,30 +16,37 @@ function onSearchVideo(event) {
         listOfVideos.innerHTML = "";
 		const items = response.data.videos;
 		let content = "";
+
+		console.log(items);
+
 		if (document.querySelector("#search_video_search").value == "") {
-			content = content + "<h2>Les meilleures vidéos : </h2>";
+			content = content + "<h2>Les meilleures vidéos : "+items.length+" vidéos</h2>";
 		} else {
-			content = content + "<h2>Résultats de votre recherche : </h2>";
+			if (items.length == 0) {
+				content = content + "<h2>Aucun résultat </h2>"
+			} else if (items.length > 1) {
+				content = content + "<h2>"+items.length+" résultats : </h2>";
+			} else {
+				content = content + "<h2>"+items.length+" résultat : </h2>";
+			}
 		}
-		
 		content = content + "<div class='row row-cols-1 row-cols-md-3 g-2'>";
-		if (items.length > 0) {
+
+		if (items.length > 0)  {
 			items.forEach(function(item) {
 				content = content + "<div class='col'>";
 				content = content + "<div class='card shadow p-3 mb-5 bg-white rounded'>"
 				content = content + "<a href='/video/"+item.slug+"'>"
-				content = content + "<img src='"+scraptUrl(item.url)+"' height='222' class='card-img-top' alt='"+item.name+"' />"
+				content = content + "<img src='"+scraptUrl(item.url)+"' height='222' class='card-img-top' alt='"+item.title+"' />"
 				content = content + "</a>"
 				content = content + "<div class='card-body'>"
-				if (item.name.length > maxLength) {
-					item.name.substring(0, maxLength) + "...";
+				if (item.title.length > maxLength) {
+					item.title.substring(0, maxLength) + "...";
 				}
-				content = content + "<h5 class='card-title' style='height: 48px;'>"+item.name+"</h5>"
+				content = content + "<h5 class='card-title' style='height: 48px;'>"+item.title+"</h5>"
 				content = content + "</div></div></div>"				
 			});
-		} else {
-			content = content + "<div class='col-12'>Aucun résultat</div>";
-		};
+		}
 		content = content + "</div>";
 		listOfVideos.innerHTML = content;
     }); 

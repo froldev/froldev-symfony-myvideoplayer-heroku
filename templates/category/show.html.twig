@@ -2,7 +2,6 @@
 
 {% block title %}myVideoPlayer || Toutes les vidéos de la catégorie
 	{{ category.name }}
-	{{ category.name }}
 {% endblock %}
 
 {% block body %}
@@ -51,10 +50,10 @@
 					<div class="col">
 						<div class="card shadow p-3 mb-5 bg-white rounded">
 							<a href="{{ path('video_show', {'slug': video.slug}) }}">
-								<img src="{{ video.url|video_thumbnail}}" height="222" class="card-img-top" alt="{{ video.name }}">
+								<img src="{{ video.url|video_thumbnail}}" height="222" class="card-img-top" alt="{{ video.title }}">
 							</a>
 							<div class="card-body">
-								<h5 class="card-title" style="height: 48px;">{{ video.name|u.truncate(65, '...', false) }}</h5>
+								<h5 class="card-title" style="height: 48px;">{{ video.title|u.truncate(65, '...', false) }}</h5>
 							</div>
 						</div>
 					</div>

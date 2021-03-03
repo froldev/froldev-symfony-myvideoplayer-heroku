@@ -1,16 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}myVideoPlayer || Voir
-	{{ video.name }}
+	{{ video.title }}
 {% endblock %}
 
 {% block body %}
-	<h2>{{ video.name }}</h1>
-	<div>{{ video.url|video_player|raw}}</div>
-	<div>de
-		<a href="{{ video.linkAuthor}}" title="Voir le site de {{ video.author}}" target="_blank">
-			{{ video.author}}
-		</a>
+	<div class="row p-2 mt-3 mb-2 text-center">
+		<h2>{{ video.name }}</h1>
 	</div>
-
-{% endblock %}
+	<div class="row p-2 mb-2">
+		<div>{{ video.url|video_player|raw}}</div>
+	</div>
+	<div class="row p-2 mb-2 border-bottom">
+		<div>Auteur :
+			{{ video.author}}</div>
+		<div>Visiter son site :
+			<a class="btn btn-primary" href="{{video.authorLink}}" title="{{ video.name }}" /</a>></div>
+		</div>
+		<div class="row p-2 mb-2">
+			<div>Description :
+				{{video.description}}</div>
+		</div>
+	{% endblock %}
