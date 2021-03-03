@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Form\SearchCategoryType;
+use App\Form\SearchVideoType;
 use App\Repository\VideoRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -84,15 +84,19 @@ class CategoryController extends AbstractController
         VideoRepository $videoRepository,
         PaginatorInterface $paginator
     ): Response {
+
         $videos = $paginator->paginate(
             $category->getVideos(),
             $request->query->getInt('page', 1),
             self::MAX_CATEGORY_VIDEOS
         );
 
+        $form = $this->createForm(SearchVideoType::class);
+
         return $this->render('category/show.html.twig', [
             'category' => $category,
             'videos' => $videos,
+            'formVideo' => $form->createView(),
         ]);
     }
 
@@ -192,5 +196,32 @@ class CategoryController extends AbstractController
             $arrayPositions[$key] = $value['position'];
         }
         return $arrayPositions;
+    }
+
+    /**
+     * @Route("/{slug}/searchMovieByCategory/{search}", name="search_movie_by_category", methods={"GET", "POST"})
+     */
+    public function searchVideoByCategory(
+        Category $category,
+        ?String $search,
+        CategoryRepository $categoryRepository,
+        VideoRepository $videoRepository
+    ): Response {
+        if ($search == "all") {
+            $videos = $categoryRepository->findBy([], ['position' => 'ASC',]);
+        } else {
+            $videos = $categoryRepository->findVideoByCategoryAndSearch($category, $search);
+        }
+
+        $arrayVideos = [];
+        foreach ($videos as $key => $value) {
+            $arrayVideos[$key]['name'] = $value['name'];
+            $arrayVideos[$key]['slug'] = $value['slug'];
+            $arrayVideos[$key]['url'] = $value['url'];
+        }
+
+        return new JsonResponse([
+            'videos' => $arrayVideos,
+        ]);
     }
 }

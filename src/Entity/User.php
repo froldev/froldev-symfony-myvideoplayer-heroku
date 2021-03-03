@@ -68,6 +68,10 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Vous devez indiquer votre nom")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Votre nom doit faire minimum 2 caractères",
+     * )
      */
     private $username;
 

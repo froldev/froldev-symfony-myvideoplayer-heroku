@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Form\SearchVideoType;
 use App\Repository\UserRepository;
 use App\Repository\VideoRepository;
@@ -17,6 +18,8 @@ class HomeController extends AbstractController
 {
     const MAX_ITEMS_NAV = 4;
     const MAX_HOME_VIDEOS = 9;
+    const BANNER_WIDTH = 1000;
+    const BANNER_HEIGHT = 400;
 
     /**
      * @Route("/", name="home")
@@ -39,6 +42,8 @@ class HomeController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'videos' => $videos,
             'formVideo' => $form->createView(),
+            'bannerWidth' => self::BANNER_WIDTH,
+            'bannerHeight' => self::BANNER_HEIGHT,
         ]);
     }
 

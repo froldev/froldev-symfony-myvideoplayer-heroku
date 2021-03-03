@@ -32,7 +32,7 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * @return Category[] Returns an array of User objects
      */
-    public function findCategoryBySearch(string $value)
+    public function findCategoryBySearch(string $value): array
     {
         $queryBuilder = $this->createQueryBuilder("c")
             ->where("c.name LIKE :value")
@@ -41,6 +41,27 @@ class CategoryRepository extends ServiceEntityRepository
             ->getQuery();
         return $queryBuilder->getResult();
     }
+
+    /**
+     * function to find videos by category
+     * @param Category $category
+     * @param string $value
+     * @return Array
+     */
+    public function findVideoByCategoryAndSearch(Category $category, string $value)
+    {
+        $queryBuilder = $this->createQueryBuilder("c")
+            ->join("c.videos", "v")
+            ->addSelect("v")
+            ->select("v.name", "v.url", "c.slug")
+            ->where("v.name LIKE :value")
+            ->andWhere("c.name = :name")
+            ->setParameter("value", "%" . $value . "%")
+            ->setParameter("name", $category->getName())
+            ->getQuery();
+        return $queryBuilder->getResult();
+    }
+
 
     public function getIdByPosition(int $position)
     {

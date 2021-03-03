@@ -12,6 +12,27 @@
 			<img class="rounded-circle" src="{{ vich_uploader_asset(category) }}" alt="{{ category.name }}" width="300px">
 		</div>
 	</div>
+	{% if videos|length > 1 %}
+		<div class="row text-center pt-3 pb-3">
+			<h3 class="pb-2 text-decoration-underline">Rechercher :
+			</h3>
+			<div class="row mt-2 mb-4">
+				{{ form_start(formVideo) }}
+				<div class="my-custom-class-for-errors">
+					{{ form_errors(formVideo) }}
+				</div>
+				<div class="row g-3 align-items-center">
+					<div class="col-lg-2 col-sm-12">
+						{{ form_label(formVideo.search,'Rechercher  : ', {'attr': {'class': 'form-label'}}) }}
+					</div>
+					<div class="col-lg-8 col-sm-10">
+						{{ form_widget(formVideo.search, {'attr': {'class': 'form-control'}}) }}
+					</div>
+				</div>
+				{{ form_end(formVideo) }}
+			</div>
+		</div>
+	{% endif %}
 	<div id="videos-category" class="row p2 mb-3">
 		<h2>
 			{% if videos|length == 0 %}
@@ -24,22 +45,28 @@
 				vidéo :
 			{% endif %}
 		</h2>
-		<div class="row row-cols-1 row-cols-md-3 g-2">
-			{% for video in videos %}
-				<div class="col">
-					<div class="card shadow p-3 mb-5 bg-white rounded">
-						<a href="{{ path('video_show', {'slug': video.slug}) }}">
-							<img src="{{ video.url|video_thumbnail}}" height="222" class="card-img-top" alt="{{ video.name }}">
-						</a>
-						<div class="card-body">
-							<h5 class="card-title" style="height: 48px;">{{ video.name|u.truncate(65, '...', false) }}</h5>
+		{% if videos|length > 1 %}
+			<div class="row row-cols-1 row-cols-md-3 g-2">
+				{% for video in videos %}
+					<div class="col">
+						<div class="card shadow p-3 mb-5 bg-white rounded">
+							<a href="{{ path('video_show', {'slug': video.slug}) }}">
+								<img src="{{ video.url|video_thumbnail}}" height="222" class="card-img-top" alt="{{ video.name }}">
+							</a>
+							<div class="card-body">
+								<h5 class="card-title" style="height: 48px;">{{ video.name|u.truncate(65, '...', false) }}</h5>
+							</div>
 						</div>
 					</div>
-				</div>
-			{% endfor %}
-		</div>
+				{% endfor %}
+			</div>
+		{% endif %}
 	</div>
 	<div class="d-flex justify-content-end mb-3">
 		{{ knp_pagination_render(videos) }}
 	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/js/category-video-search.js"></script>
 {% endblock %}
