@@ -53,7 +53,7 @@ class CategoryRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder("c")
             ->join("c.videos", "v")
             ->addSelect("v")
-            ->select("v.name", "v.url", "c.slug")
+            ->select("v.name", "v.url", "v.slug")
             ->where("v.name LIKE :value")
             ->andWhere("c.name = :name")
             ->setParameter("value", "%" . $value . "%")

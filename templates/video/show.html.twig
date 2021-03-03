@@ -6,10 +6,11 @@
 
 {% block body %}
 	<h2>{{ video.name }}</h1>
+	<div>{{ video.url|video_player|raw}}</div>
 	<div>de
 		<a href="{{ video.linkAuthor}}" title="Voir le site de {{ video.author}}" target="_blank">
 			{{ video.author}}
 		</a>
 	</div>
-	<div>{{ video.url|video_player|raw}}</div>
+
 {% endblock %}
