@@ -63,7 +63,6 @@ class VideoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $video->setTitle(ucfirst(strtolower($video->getTitle())));
-            $video->setSlug(strtolower($video->getSlug()));
             $video->setAuthor(ucwords(strtolower($video->getAuthor())));
             $em->persist($video);
             $em->flush();
@@ -102,7 +101,6 @@ class VideoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $video->setTitle(ucfirst(strtolower($video->getTitle())));
-            $video->setSlug(strtolower($video->getSlug()));
             $video->setAuthor(ucwords(strtolower($video->getAuthor())));
             $em->flush();
             $this->addFlash("success", "La vidéo a bien été modifiée !");
