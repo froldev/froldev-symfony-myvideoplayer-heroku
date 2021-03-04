@@ -16,6 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+    const MAX_LINKS_NAV = 6;
+
     /**
      * @Route("/", name="home")
      */
@@ -37,7 +39,6 @@ class HomeController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'videos' => $videos,
             'formVideo' => $form->createView(),
-            'max' => 4,
         ]);
     }
 
@@ -60,7 +61,7 @@ class HomeController extends AbstractController
     {
         return $this->render('bricks/_navbar.html.twig', [
             'categories' => $categoryRepository->findAll(),
-            'max' => 4,
+            'max' => self::MAX_LINKS_NAV,
         ]);
     }
 
