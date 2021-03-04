@@ -1,31 +1,44 @@
-<footer class="footer mt-auto py-3 bg-dark text-white">
-	<div class="row justify-content-around">
-		<div class="col-xs-12 col-md-6 text-center">
-			<h5>Categories</h5>
-			<ul class="list-unstyled text-small">
-				{% for category in categories %}
+<footer class="container-fluid mt-4 py-4 bg-dark text-white">
+	<div class="container">
+		<div class="row justify-content-around">
+			<div class="col-xs-12 col-md-6 text-center">
+				<h5>Categories :
+				</h5>
+				<ul class="list-unstyled text-small">
+					{% for category in categories %}
+						<li>
+							<a class="text-muted" href="{{ path('category_show', { 'slug' : category.slug }) }}">{{ category.name }}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-xs-12 col-md-6 text-center">
+				<h5>Ressources :
+				</h5>
+				<ul class="list-unstyled text-small">
 					<li>
-						<a class="text-muted" href="{{ path('category_show', { 'slug' : category.slug }) }}">{{ category.name }}</a>
+						<a class="text-muted" href="https://symfony.com/" target="_blank">Symfony</a>
 					</li>
-				{% endfor %}
-			</ul>
-		</div>
-		<div class="col-xs-12 col-md-6 text-center">
-			<h5>Autres</h5>
-			<ul class="list-unstyled text-small">
-				<li>
-					<a class="text-muted" href="#">Resource</a>
-				</li>
-				<li>
-					<a class="text-muted" href="#">Resource name</a>
-				</li>
-				<li>
-					<a class="text-muted" href="#">Another resource</a>
-				</li>
-				<li>
-					<a class="text-muted" href="#">Final resource</a>
-				</li>
-			</ul>
+					<li>
+						<a class="text-muted" href="https://twig.symfony.com/" target="_blank">Twig</a>
+					</li>
+					<li>
+						<a class="text-muted" href="https://github.com/axios/axios" target="_blank">Axios</a>
+					</li>
+					<li>
+						<a class="text-muted" href="https://getbootstrap.com/" target="_blank">Bootstrap</a>
+					</li>
+					<li>
+						<a class="text-muted" href="https://github.com/Copadia-team/php-video-url-parser" target="_blank">Copadia - Php Video Url Parser</a>
+					</li>
+					<li>
+						<a class="text-muted" href="https://symfony.com/doc/2.x/bundles/EasyAdminBundle/integration/vichuploaderbundle.html" target="_blank">Vich Uploader</a>
+					</li>
+					<li>
+						<a class="text-muted" href="https://github.com/KnpLabs/KnpPaginatorBundle" target="_blank">Knp Paginator Bundle</a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </footer>
