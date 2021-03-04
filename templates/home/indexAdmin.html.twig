@@ -99,7 +99,9 @@
 						</h4>
 						<div class="progress mx-auto" data-value='{{(category.videos|length*100)/videos|length}}'>
 
-							<div class="progress-bar" role="progressbar" style="width: {{(category.videos|length*100)/videos|length}}%;" aria-valuenow="{{(category.videos|length*100)/videos|length}}" aria-valuemin="0" aria-valuemax="100">{{(category.videos|length*100)/videos|length}}%</div>
+							<div class="progress-bar" role="progressbar" style="width: {{ ((category.videos|length*100)/videos|length)|round }}%;" aria-valuenow="{{ ((category.videos|length*100)/videos|length)|round }}" aria-valuemin="0" aria-valuemax="100">
+								{{ ((category.videos|length*100)/videos|length)|round }}%
+							</div>
 						</div>
 					</div>
 				</div>

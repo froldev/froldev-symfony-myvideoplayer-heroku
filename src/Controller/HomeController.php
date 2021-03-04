@@ -60,7 +60,9 @@ class HomeController extends AbstractController
     public function renderNavBar(CategoryRepository $categoryRepository, Request $request): Response
     {
         return $this->render('bricks/_navbar.html.twig', [
-            'categories' => $categoryRepository->findAll(),
+            'categories' => $categoryRepository->findBy([], [
+                'position' => 'ASC',
+            ]),
             'max' => self::MAX_LINKS_NAV,
         ]);
     }
@@ -68,7 +70,9 @@ class HomeController extends AbstractController
     public function renderFooter(CategoryRepository $categoryRepository): Response
     {
         return $this->render('bricks/_footer.html.twig', [
-            'categories' => $categoryRepository->findAll(),
+            'categories' => $categoryRepository->findBy([], [
+                'position' => 'ASC',
+            ]),
         ]);
     }
 
