@@ -37,6 +37,7 @@ class HomeController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'videos' => $videos,
             'formVideo' => $form->createView(),
+            'max' => 4,
         ]);
     }
 
@@ -52,14 +53,14 @@ class HomeController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'videos' => $videoRepository->findAll(),
             'users' => $userRepository->findAll(),
-            'maxLink' => 4,
         ]);
     }
 
-    public function renderNavBar(CategoryRepository $categoryRepository): Response
+    public function renderNavBar(CategoryRepository $categoryRepository, Request $request): Response
     {
         return $this->render('bricks/_navbar.html.twig', [
             'categories' => $categoryRepository->findAll(),
+            'max' => 4,
         ]);
     }
 

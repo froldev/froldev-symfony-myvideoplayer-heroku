@@ -1,3 +1,6 @@
+{% set route = app.request.attributes.get('route') %}
+{% set slugs = app.request.attributes.get('slug')  %}
+
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
 	<div class="container">
 		{% if app.user %}
@@ -12,25 +15,33 @@
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				{% if app.user %}
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('home_admin') }}">Accueil</a>
+						<a class="nav-link {% if route== 'home_admin' %}active{% endif %}" href="{{ path('home_admin') }}">Accueil</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('category_index') }}">Catégories</a>
+						<a class="nav-link {% if route== 'category_index' %}active{% endif %}" href="{{ path('category_index') }}">Catégories</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('video_index') }}">Vidéos</a>
+						<a class="nav-link {% if route== 'video_index' %}active{% endif %}" href="{{ path('video_index') }}">Vidéos</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('user_index') }}">Utilisateurs</a>
+						<a class="nav-link {% if route== 'user_index' %}active{% endif %}" href="{{ path('user_index') }}">Utilisateurs</a>
 					</li>
 				{% else %}
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('home') }}">Accueil</a>
+						<a class="nav-link {% if route == 'home' %}active{% endif %}" href="{{ path('home') }}">Accueil</a>
 					</li>
 					{% for category in categories|slice(0, max) %}
-						<li class="nav-item">
-							<a class="nav-link" href="{{ path('category_show', { 'slug' : category.slug }) }}">{{ category.name }}</a>
-						</li>
+						{% if (slugs) %}
+							{% for key, slug in slugs %}
+								<li class="nav-item">
+									<a class="nav-link {% if (route== 'category_show') and (category.slug == slug) %}active{% endif %}" href="{{ path('category_show', { 'slug' : category.slug }) }}">{{ category.name }}</a>
+								</li>
+							{% endfor %}
+						{% else %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('category_show', { 'slug' : category.slug }) }}">{{ category.name }}</a>
+							</li>
+						{% endif %}
 					{% endfor %}
 					{% if categories|length > max %}
 						<li class="nav-item dropdown">

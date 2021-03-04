@@ -15,7 +15,11 @@
 	</head>
 
 	<body class="d-flex flex-column h-100">
-		{{ render(controller('App\\Controller\\HomeController::renderNavBar')) }}
+		{{ render(controller('App\\Controller\\HomeController::renderNavBar', {
+			'route' : app.request.attributes.get("_route"),
+			'slug' : app.request.attributes.get('_route_params'),
+			})) }}
+
 		<main class="container" style="margin-top: 60px;">
 			{% for label, messages in app.flashes %}
 				{% for message in messages %}
