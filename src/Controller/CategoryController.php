@@ -22,8 +22,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class CategoryController extends AbstractController
 {
-    const MAX_CATEGORY_VIDEOS = 9;
-
     /**
      * @Route("/", name="index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
@@ -88,7 +86,7 @@ class CategoryController extends AbstractController
         $videos = $paginator->paginate(
             $category->getVideos(),
             $request->query->getInt('page', 1),
-            self::MAX_CATEGORY_VIDEOS
+            9
         );
 
         $form = $this->createForm(SearchVideoType::class);

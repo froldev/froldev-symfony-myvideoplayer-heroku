@@ -20,7 +20,7 @@
 						{% for key, category in categories %}
 							<div class="carousel-item {% if key == 0 %}active{% endif %}">
 								<a href="{{ path('category_show', { 'slug' : category.name }) }}" title="{{ category.name }}"/>
-								<img src="{{ vich_uploader_asset(category) }}" class="d-block w-100" width="{{bannerWidth}}" height="{{bannerHeight}}" alt="{{ category.name}}" loading="lazy">
+								<img src="{{ vich_uploader_asset(category) }}" class="d-block w-100" width="1000" height="400" alt="{{ category.name}}" loading="lazy">
 								<div class="carousel-caption d-none d-md-block">
 									<h3 class="bg-secondary p-2">{{ category.name }}</h3>
 								</div>

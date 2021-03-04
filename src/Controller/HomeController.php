@@ -16,11 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    const MAX_ITEMS_NAV = 4;
-    const MAX_HOME_VIDEOS = 9;
-    const BANNER_WIDTH = 1000;
-    const BANNER_HEIGHT = 400;
-
     /**
      * @Route("/", name="home")
      */
@@ -35,15 +30,13 @@ class HomeController extends AbstractController
         $videos = $paginator->paginate(
             $videoRepository->findBy(['is_best' => true]),
             $request->query->getInt('page', 1),
-            self::MAX_HOME_VIDEOS
+            9
         );
 
         return $this->render('home/index.html.twig', [
             'categories' => $categoryRepository->findAll(),
             'videos' => $videos,
             'formVideo' => $form->createView(),
-            'bannerWidth' => self::BANNER_WIDTH,
-            'bannerHeight' => self::BANNER_HEIGHT,
         ]);
     }
 
@@ -67,7 +60,7 @@ class HomeController extends AbstractController
     {
         return $this->render('bricks/_navbar.html.twig', [
             'categories' => $categoryRepository->findAll(),
-            'max' => self::MAX_ITEMS_NAV,
+            4
         ]);
     }
 
