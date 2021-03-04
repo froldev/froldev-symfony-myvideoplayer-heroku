@@ -39,8 +39,8 @@ class VideoController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
+     * modifie l'url si y a l'indication &t= qui correspond à une durée dans une vidéo
      * 1ere lettre du titre de la video en masjuscule
-     * slug en minuscule
      * 1ere lettre des mots de l'auteur en majuscule
      */
     public function new(Request $request, EntityManagerInterface $em): Response
@@ -51,6 +51,10 @@ class VideoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (stripos($video->getUrl(), "&t=") !== FALSE) {
+                $newUrl = strstr($video->getUrl(), "&t=", true);
+                $video->setUrl($newUrl);
+            }
             $video->setTitle(ucfirst(strtolower($video->getTitle())));
             $video->setAuthor(ucwords(strtolower($video->getAuthor())));
             $em->persist($video);
@@ -79,8 +83,8 @@ class VideoController extends AbstractController
     /**
      * @Route("/{slug}/edit", name="edit", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
+     * modifie l'url si y a l'indication &t= qui correspond à une durée dans une vidéo
      * 1ere lettre du titre de la video en masjuscule
-     * slug en minuscule
      * 1ere lettre des mots de l'auteur en majuscule
      */
     public function edit(Request $request, Video $video, EntityManagerInterface $em): Response
@@ -89,6 +93,10 @@ class VideoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (stripos($video->getUrl(), "&t=") !== FALSE) {
+                $newUrl = strstr($video->getUrl(), "&t=", true);
+                $video->setUrl($newUrl);
+            }
             $video->setTitle(ucfirst(strtolower($video->getTitle())));
             $video->setAuthor(ucwords(strtolower($video->getAuthor())));
             $em->flush();

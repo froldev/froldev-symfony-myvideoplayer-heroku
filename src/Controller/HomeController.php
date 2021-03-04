@@ -60,7 +60,6 @@ class HomeController extends AbstractController
     {
         return $this->render('bricks/_navbar.html.twig', [
             'categories' => $categoryRepository->findAll(),
-            4
         ]);
     }
 
