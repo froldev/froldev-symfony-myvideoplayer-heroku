@@ -20,9 +20,11 @@
 					<li class="nav-item">
 						<a class="nav-link {% if route== 'category_index' %}active{% endif %}" href="{{ path('category_index') }}">Catégories</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link {% if route== 'video_index' %}active{% endif %}" href="{{ path('video_index') }}">Vidéos</a>
-					</li>
+					{% if categories|length > 0 %}
+						<li class="nav-item">
+							<a class="nav-link {% if route== 'video_index' %}active{% endif %}" href="{{ path('video_index') }}">Vidéos</a>
+						</li>
+					{% endif %}
 					<li class="nav-item">
 						<a class="nav-link {% if route== 'user_index' %}active{% endif %}" href="{{ path('user_index') }}">Utilisateurs</a>
 					</li>

@@ -1,15 +1,13 @@
-[![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url]
-
 # myVideoPlayer
 
-![](https://github.com/froldev/symfony-pirats/blob/master/presentation.png)
+![](https://github.com/froldev/symfony-myvideoplayer/blob/master/myvideoplayer.png)
 
 ## Getting Started for Projects
 
 ### Requirements
 
 - Php ^7.2
-- Symfony 5
+- Symfony 5.2
 - Composer
 
 ### Installation
@@ -22,20 +20,20 @@ $ git clone https://github.com/froldev/symfony-myVideoPlayer.git
 
 2. Move into the directory and create an `.env.local` file.
    **This one is not committed to the shared repository.**
-   Set `db_name` to **symfony-myvideoplayer**.
+   Modify `db_name` by the name you want.
 
 3. Execute the following commands in your working folder to install the project:
 
 ```bash
 $ composer install
 $ bin/console doctrine:database:create (create the DataBase)
-$ bin/console doctrine:migration:migrate (execute migrations and create tables)
+$ bin/console doctrine:migrations:migrate (execute migrations and create tables)
 $ bin/console doctrine:fixtures:load (execute fixtures to add an administrator account)
 ```
 
 > Reminder: Don't use composer update to avoid problem
 
-> Assets are directly into _public/_ directory, **we will not use** Webpack with this checkpoint
+> Assets are directly into _public/_ directory
 
 ### Working
 
@@ -63,26 +61,28 @@ $ symfony server:start
 ---
 
     * homepage with banner, search and best videos
-    * videos by category in the navbar
+    * pages by category with videos
 
 ## Admin interface (**with connexion**)
 
 ---
 
     * page connexion
-    * homepage with several elements
-    * page category with create, update, delete and search a category
-    * page video with create, update, delete and search a video
-    * page user with create, update, delete and search a user
+    * homepage with several elements (number of categories, number of videos and number of users)
+    * page category with list, create, update, delete and search a category
+    * page video with list, create, update, delete and search a video
+    * page user with list create, update, delete and search a user
 
-### Connexion to Admin Interface
+## Connexion to Admin Interface
+
+---
 
 ```bash
 login : admin@admin.fr
 password : password
 ```
 
-**Remember to change the password to secure access to the adminsitrator area**
+## **Remember to change the password to secure access to the adminsitrator area**
 
 ### Constant location in this project
 
@@ -95,9 +95,9 @@ The others will be in a drop-down list
     const MAX_LINKS_NAV = 6;
 ```
 
-### technology framework and library used in this project
+### Technology framework and library used in this project
 
-`PHP 8.0`, `Symfony 5.2`, `JavaScript`, `Axios`, `Html5`, `Twig`, `Bootstrap`, `fortawesome/fontawesome`, `Copadia - Php Video Url Parser`, `FOS CKEditor Bundle`, `StofDoctrine Extension Bundle`, `Vich Uploader`, `Knp Paginator Bundle`
+`PHP 7.2`, `Symfony 5.2`, `JavaScript`, `Axios`, `Html5`, `Twig`, `Bootstrap`, `fortawesome/fontawesome`, `Copadia - Php Video Url Parser`, `FOS CKEditor Bundle`, `StofDoctrine Extension Bundle`, `Vich Uploader`, `Knp Paginator Bundle`
 
 ### About database `MySQL`
 

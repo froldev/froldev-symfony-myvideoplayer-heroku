@@ -42,30 +42,37 @@
 		</div>
 	{% endif %}
 
-	<div class="row p2">
-		<h2>Rechercher dans les meilleures vidéos :
-		</h2>
-		<div class="row mt-2 mb-4">
-			{{ form_start(formVideo) }}
-			<div class="my-custom-class-for-errors">
-				{{ form_errors(formVideo) }}
-			</div>
-			<div class="row g-3 align-items-center">
-				<div class="col-lg-2 col-sm-12">
-					{{ form_label(formVideo.search,'Rechercher  : ', {'attr': {'class': 'form-label'}}) }}
+	{% if categories|length > 0 %}
+		<div class="row p2">
+			<h2>Rechercher dans les meilleures vidéos :
+			</h2>
+			<div class="row mt-2 mb-4">
+				{{ form_start(formVideo) }}
+				<div class="my-custom-class-for-errors">
+					{{ form_errors(formVideo) }}
 				</div>
-				<div class="col-lg-8 col-sm-10">
-					{{ form_widget(formVideo.search, {'attr': {'class': 'form-control'}}) }}
+				<div class="row g-3 align-items-center">
+					<div class="col-lg-2 col-sm-12">
+						{{ form_label(formVideo.search,'Rechercher  : ', {'attr': {'class': 'form-label'}}) }}
+					</div>
+					<div class="col-lg-8 col-sm-10">
+						{{ form_widget(formVideo.search, {'attr': {'class': 'form-control'}}) }}
+					</div>
 				</div>
+				{{ form_end(formVideo) }}
 			</div>
-			{{ form_end(formVideo) }}
 		</div>
-	</div>
+	{% endif %}
 
 	<div id="videos" class="row p2">
-		<h2>Les meilleures vidéos :
+		<h2>
+		{% if categories|length > 0 %}
+		Les meilleures vidéos :
 			{{videos|length}}
 			vidéos
+		{% else %}
+		Aucune vidéo
+		{% endif%}
 		</h2>
 		<div class="row row-cols-1 row-cols-md-3 g-2">
 			{% for video in videos %}
