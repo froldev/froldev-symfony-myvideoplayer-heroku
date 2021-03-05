@@ -63,8 +63,6 @@ class Video
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url(message="Veuillez indiquer une url valide")
-     * @Assert\NotBlank(message="Veuillez indiquer une url pour l'auteur")
      */
     private $author_link;
 

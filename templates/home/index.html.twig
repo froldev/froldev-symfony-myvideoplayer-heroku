@@ -42,7 +42,7 @@
 		</div>
 	{% endif %}
 
-	{% if categories|length > 0 %}
+	{% if videos|length > 1 %}
 		<div class="row p2">
 			<h2>Rechercher dans les meilleures vidéos :
 			</h2>
@@ -66,10 +66,14 @@
 
 	<div id="videos" class="row p2">
 		<h2>
-		{% if categories|length > 0 %}
+		{% if videos|length > 0 %}
 		Les meilleures vidéos :
 			{{videos|length}}
+			{% if videos|length > 1 %}
 			vidéos
+			{% else %}
+			vidéo
+			{% endif %}
 		{% else %}
 		Aucune vidéo
 		{% endif%}
