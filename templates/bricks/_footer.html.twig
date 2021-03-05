@@ -1,6 +1,7 @@
 <footer class="footer container-fluid mt-4 py-4 bg-dark text-white">
 	<div class="container">
 		<div class="row justify-content-around">
+			{% if categories|length > 0 %}
 			<div class="col-xs-12 col-md-6 text-center">
 				<h5>Categories :
 				</h5>
@@ -12,39 +13,40 @@
 					{% endfor %}
 				</ul>
 			</div>
+			{% endif %}
 			<div class="col-xs-12 col-md-6 text-center">
 				<h5>Ressources :
 				</h5>
 				<ul class="list-unstyled text-small">
 					<li>
-						<a class="text-muted" href="https://symfony.com/" target="_blank">Symfony</a>
+						<a class="text-muted" href="https://symfony.com/" target="_blank" title="Symfony">Symfony</a>
 					</li>
 					<li>
-						<a class="text-muted" href="https://twig.symfony.com/" target="_blank">Twig</a>
+						<a class="text-muted" href="https://twig.symfony.com/" target="_blank" title="Twig">Twig</a>
 					</li>
 					<li>
-						<a class="text-muted" href="https://github.com/axios/axios" target="_blank">Axios</a>
+						<a class="text-muted" href="https://github.com/axios/axios" target="_blank" title="Axios">Axios</a>
 					</li>
 					<li>
-						<a class="text-muted" href="https://getbootstrap.com/" target="_blank">Bootstrap</a>
+						<a class="text-muted" href="https://getbootstrap.com/" target="_blank" title="Bootstrap">Bootstrap</a>
 					</li>
 					<li>
-						<a class="text-muted" href="https://fontawesome.com/" target="_blank">Font Awesome</a>
+						<a class="text-muted" href="https://fontawesome.com/" target="_blank" title="Font Awesome">Font Awesome</a>
 					</li>
 					<li>
-						<a class="text-muted" href="https://github.com/Copadia-team/php-video-url-parser" target="_blank">Copadia - Php Video Url Parser</a>
+						<a class="text-muted" href="https://github.com/Copadia-team/php-video-url-parser" target="_blank" title="Copadia - Php Video Url Parser">Copadia - Php Video Url Parser</a>
 					</li>
 					<li>
-						<a class="text-muted" href="https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html" target="_blank">FOS CKEditor Bundle</a>
+						<a class="text-muted" href="https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html" target="_blank" title="FOS CKEditor Bundle">FOS CKEditor Bundle</a>
 					</li>
 					<li>
-						<a class="text-muted" href="https://symfony.com/doc/current/bundles/StofDoctrineExtensionsBundle/index.html" target="_blank">StofDoctrine Extension Bundle</a>
+						<a class="text-muted" href="https://symfony.com/doc/current/bundles/StofDoctrineExtensionsBundle/index.html" target="_blank" title="StofDoctrine Extension Bundle">StofDoctrine Extension Bundle</a>
 					</li>
 					<li>
-						<a class="text-muted" href="https://symfony.com/doc/2.x/bundles/EasyAdminBundle/integration/vichuploaderbundle.html" target="_blank">Vich Uploader</a>
+						<a class="text-muted" href="https://symfony.com/doc/2.x/bundles/EasyAdminBundle/integration/vichuploaderbundle.html" target="_blank" title="Vich Uploader">Vich Uploader</a>
 					</li>
 					<li>
-						<a class="text-muted" href="https://github.com/KnpLabs/KnpPaginatorBundle" target="_blank">Knp Paginator Bundle</a>
+						<a class="text-muted" href="https://github.com/KnpLabs/KnpPaginatorBundle" target="_blank" title="Knp Paginator Bundle">Knp Paginator Bundle</a>
 					</li>
 				</ul>
 			</div>
