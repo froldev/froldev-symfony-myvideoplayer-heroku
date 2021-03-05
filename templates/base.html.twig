@@ -14,13 +14,13 @@
 		{% endblock %}
 	</head>
 
-	<body class="d-flex flex-column h-100">
+	<body class="d-flex flex-column min-vh-100">
 		{{ render(controller('App\\Controller\\HomeController::renderNavBar', {
 			'route' : app.request.attributes.get("_route"),
 			'slug' : app.request.attributes.get('_route_params'),
 			})) }}
 
-		<main class="container" style="margin-top: 60px;">
+		<main class="container flex-fill" style="margin-top: 60px;">
 			{% for label, messages in app.flashes %}
 				{% for message in messages %}
 					<div class="alert alert-{{ label }}" role="alert">
