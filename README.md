@@ -2,6 +2,8 @@
 
 ![](https://github.com/froldev/symfony-myvideoplayer/blob/master/myvideoplayer.png)
 
+Application to manage youtube videos by category
+
 ## Getting Started for Projects
 
 ### Requirements
@@ -13,10 +15,6 @@
 ### Installation
 
 1. Clone the current repository.
-
-```bash
-$ git clone https://github.com/froldev/symfony-myVideoPlayer.git
-```
 
 2. Move into the directory and create an `.env.local` file.
    **This one is not committed to the shared repository.**
