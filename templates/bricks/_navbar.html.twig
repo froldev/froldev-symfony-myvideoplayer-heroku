@@ -18,15 +18,15 @@
 						<a class="nav-link {% if route== 'home_admin' %}active{% endif %}" href="{{ path('home_admin') }}">Accueil</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link {% if route== 'category_index' %}active{% endif %}" href="{{ path('category_index') }}">Catégories</a>
+						<a class="nav-link {% if route matches '{^category}' %}active{% endif %}" href="{{ path('category_index') }}">Catégories</a>
 					</li>
 					{% if categories|length > 0 %}
 						<li class="nav-item">
-							<a class="nav-link {% if route== 'video_index' %}active{% endif %}" href="{{ path('video_index') }}">Vidéos</a>
+							<a class="nav-link {% if route matches '{^video}' %}active{% endif %}" href="{{ path('video_index') }}">Vidéos</a>
 						</li>
 					{% endif %}
 					<li class="nav-item">
-						<a class="nav-link {% if route== 'user_index' %}active{% endif %}" href="{{ path('user_index') }}">Utilisateurs</a>
+						<a class="nav-link {% if route matches '{^user}' %}active{% endif %}" href="{{ path('user_index') }}">Utilisateurs</a>
 					</li>
 				{% else %}
 					<li class="nav-item">
@@ -36,7 +36,7 @@
 						{% if (slugs) %}
 							{% for key, slug in slugs %}
 								<li class="nav-item">
-									<a class="nav-link {% if (route== 'category_show') and (category.slug == slug) %}active{% endif %}" href="{{ path('category_show', { 'slug' : category.slug }) }}">{{ category.name }}</a>
+									<a class="nav-link {% if (route == 'category_show') and (category.slug == slug) %}active{% endif %}" href="{{ path('category_show', { 'slug' : category.slug }) }}">{{ category.name }}</a>
 								</li>
 							{% endfor %}
 						{% else %}
